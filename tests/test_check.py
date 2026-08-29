@@ -99,3 +99,19 @@ def test_cli_evidence_exit_codes(tmp_path, capsys):
     assert cli.main(["evidence", "mentions", "路人甲", "-w", str(book)]) == 2
     capsys.readouterr()
     assert cli.main(["evidence", "mentions", "-w", str(book)]) == 0  # 空注册表总览=合法事实
+
+
+def test_beats_fm_extra_keys_rejected(tmp_path):
+    # AGENTS 禁令6：front-matter 超键 = 工程痕迹，check 必须拦（白名单=craft#front-matter 键）
+    book = _mkbook(tmp_path, healthy=True)
+    b = book / "outlines/vol_01/beats/ch_001.md"
+    b.write_text("---\nform: 单场景章\nquota: 静章\nscratch: 42\n---\n\n拍点。\n", encoding="utf-8")
+    rep = checks.run_checks(book)
+    hit = [e for e in rep["errors"] if e["code"] == "beats_fm_extra_keys"]
+    assert len(hit) == 1 and "quota" in hit[0]["msg"] and "scratch" in hit[0]["msg"]
+    # 合法六键+form_reason 必须放行（防误伤）
+    b.write_text("---\nchapter: ch_001\nvol: vol_01\nform: 单场景章\npov: 甲\n"
+                 "words: 20-40\nstyle_notes: 贴耳\nform_reason: 剧情需要\n---\n\n拍点。\n",
+                 encoding="utf-8")
+    assert [e for e in checks.run_checks(book)["errors"]
+            if e["code"] == "beats_fm_extra_keys"] == []

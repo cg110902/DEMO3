@@ -22,6 +22,9 @@ def _err(code: str, msg: str) -> dict:
     return {"code": code, "msg": msg}
 
 
+_BEATS_FM_KEYS = {"chapter", "vol", "form", "pov", "words", "style_notes", "form_reason"}
+
+
 def run_checks(book: Path) -> dict:
     errors: list[dict] = []
     warnings: list[dict] = []
@@ -94,7 +97,7 @@ def run_checks(book: Path) -> dict:
     for rel in slot_hits:
         errors.append(_err("unfilled_slot", f"{rel} 存在未填充槽位 {{{{slot:...}}}}（Stage 0 未完成）"))
 
-    # ---- beats 协议（机械部分）：同 form 连章必须给理由；form 缺失 ----
+    # ---- beats 协议（机械部分）：同 form 连章必须给理由；form 缺失；超键拦截 ----
     beats = sorted(common.find_chapter_files(book, "beats"),
                    key=lambda p: (p.parts[-3] if len(p.parts) > 2 else "",
                                   common.chapter_number_from_name(p.name) or 0))
@@ -102,6 +105,11 @@ def run_checks(book: Path) -> dict:
     for f in beats:
         fm = common.parse_front_matter(f.read_text(encoding="utf-8", errors="replace"))
         vol = f.relative_to(book / "outlines").parts[0]
+        extra = set(fm) - _BEATS_FM_KEYS
+        if extra:
+            errors.append(_err("beats_fm_extra_keys",
+                               f"{f.name}: front-matter 含未定义键 {sorted(extra)}"
+                               f"（合法键 {sorted(_BEATS_FM_KEYS)}；工程痕迹禁入稿——AGENTS 禁令6）"))
         num = common.chapter_number_from_name(f.name) or 0
         form = fm.get("form", "")
         if not form:

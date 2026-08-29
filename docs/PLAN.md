@@ -13,6 +13,8 @@
 > ⑤ inbox README 样例补 place upsert 与 status 枚举警示（生产两次踩坑）；
 > ⑥ craft 新增"章长方差"与"guard 选词"两条默认值；workflow Stage 1 自查加两问（带错开/人物卡承诺回写）；
 > 全部改动零新命令、零新文件、零 schema 变更（words 新字段除外）。
+>
+> v2 升级提案（未定稿）见 `docs/ROADMAP.md`：裁决后进本文件、再动码。
 
 ---
 
