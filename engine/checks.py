@@ -1,0 +1,165 @@
+"""check：结构 + schema + 算术体检（吸收旧 doctor/verify/audit；errors 只允许事实级）。
+
+语义红线（PLAN §2/§8.1）：
+- errors：可机械判定必须修复的事实——schema 违规、引用未登记实体、章号断档、占位符未填、
+  同 form 无理由、账本重算不符（state.verify_state）。
+- warnings：算术数出来的偏离事实（字数出带、线逾期、tics 命中、form 占比超 40%）——只报数，
+  是否修、怎么修由主控/审校决定。
+- 两个桶里都不许出现「建议/疑似/不宜」等判断词；本模块零写入。
+"""
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+from . import common, evidence, state
+
+SLOT_RE = re.compile(r"\{\{\s*slot:")
+FORM_SHARE_LIMIT = 0.40
+
+
+def _err(code: str, msg: str) -> dict:
+    return {"code": code, "msg": msg}
+
+
+def run_checks(book: Path) -> dict:
+    errors: list[dict] = []
+    warnings: list[dict] = []
+    stats: dict = {}
+
+    # ---- project.json ----
+    proj_path = book / "project.json"
+    proj: dict = {}
+    if not proj_path.exists():
+        errors.append(_err("project_missing", f"缺 project.json: {book}（先运行 init）"))
+    else:
+        try:
+            proj = common.load_json(proj_path)
+        except (ValueError, OSError) as exc:
+            errors.append(_err("project_corrupt", f"project.json 解析失败: {exc}"))
+    for field in ("title", "genre"):
+        if proj and not str(proj.get(field, "")).strip():
+            errors.append(_err("project_field_empty", f"project.json.{field} 为空"))
+    band = proj.get("words_target")
+    band_ok = isinstance(band, list) and len(band) == 2 and all(isinstance(x, int) for x in band)
+    if proj and "words_target" in proj and not band_ok:
+        errors.append(_err("project_field_type", "project.json.words_target 必须是 [下限, 上限] 整数对"))
+
+    # ---- 状态层（schema + 账本重算 + 唯一性，sync 前同款体检） ----
+    for msg in state.verify_state(book):
+        errors.append(_err("state_inconsistent", msg))
+
+    # ---- 实体引用闭合（current.present_characters ∈ 注册表名/别名） ----
+    try:
+        ents = state.load_state(book, "entities")["entries"]
+        known = set()
+        for e in ents:
+            known.add(str(e.get("name", "")))
+            known.update(str(a) for a in e.get("aliases", []) if a)
+        cur = state.load_state(book, "current")
+        for name in cur.get("present_characters", []):
+            if str(name).strip() and str(name) not in known:
+                errors.append(_err("unregistered_character",
+                                   f"current.present_characters 引用未登记实体「{name}」"
+                                   "（先在 entities 提案注册，名字须与卡一致）"))
+    except (ValueError, FileNotFoundError) as exc:
+        errors.append(_err("state_unreadable", str(exc)))
+
+    # ---- 稿件结构：final 章号断档 / 一章多稿 ----
+    final_files = common.find_chapter_files(book, "final")
+    per_ch: dict[int, list[Path]] = {}
+    for f in final_files:
+        n = common.chapter_number_from_name(f.name)
+        if n is not None:
+            per_ch.setdefault(n, []).append(f)
+    for n, fs in sorted(per_ch.items()):
+        if len(fs) > 1:
+            errors.append(_err("duplicate_final",
+                               f"第{n}章有 {len(fs)} 份定稿: {', '.join(f.name for f in fs)}"))
+    if per_ch:
+        missing = sorted(set(range(min(per_ch), max(per_ch) + 1)) - set(per_ch))
+        if missing:
+            errors.append(_err("final_gap_chapters",
+                               f"final 章号断档: {missing}（第 {min(per_ch)} 与 {max(per_ch)} 章之间无定稿）"))
+    stats["final_chapters"] = len(per_ch)
+
+    # ---- 占位符：槽位未实例化禁止入流水线 ----
+    slot_hits = []
+    for md in sorted(book.rglob("*.md")):
+        try:
+            if SLOT_RE.search(md.read_text(encoding="utf-8", errors="ignore")):
+                slot_hits.append(str(md.relative_to(book)))
+        except OSError:
+            continue
+    for rel in slot_hits:
+        errors.append(_err("unfilled_slot", f"{rel} 存在未填充槽位 {{{{slot:...}}}}（Stage 0 未完成）"))
+
+    # ---- beats 协议（机械部分）：同 form 连章必须给理由；form 缺失 ----
+    beats = sorted(common.find_chapter_files(book, "beats"),
+                   key=lambda p: (p.parts[-3] if len(p.parts) > 2 else "",
+                                  common.chapter_number_from_name(p.name) or 0))
+    prev_form_by_vol: dict[str, tuple[int, str]] = {}
+    for f in beats:
+        fm = common.parse_front_matter(f.read_text(encoding="utf-8", errors="replace"))
+        vol = f.relative_to(book / "outlines").parts[0]
+        num = common.chapter_number_from_name(f.name) or 0
+        form = fm.get("form", "")
+        if not form:
+            errors.append(_err("beats_missing_form", f"{f.name}: front-matter 缺 form 字段（Stage 1 未选章型）"))
+        else:
+            last = prev_form_by_vol.get(vol)
+            if last and last[1] == form and num == last[0] + 1 and not fm.get("form_reason"):
+                errors.append(_err("beats_form_repeat_without_reason",
+                                   f"{f.name}: 与上一章同 form「{form}」但 front-matter 未写 form_reason"))
+            prev_form_by_vol[vol] = (num, form)
+
+    # ---- 流程事实（warn 级）：final 无 raw / 无 beats ----
+    raw_nums = {common.chapter_number_from_name(f.name) for f in common.find_chapter_files(book, "raw")}
+    beats_nums = {common.chapter_number_from_name(f.name) for f in common.find_chapter_files(book, "beats")}
+    for n in sorted(per_ch):
+        tok = f"ch_{n:03d}"
+        if n not in raw_nums:
+            warnings.append(_err("final_without_raw", f"{tok}: 有定稿但无 raw 草稿（流程事实，供核对）"))
+        if n not in beats_nums:
+            warnings.append(_err("final_without_beats", f"{tok}: 有定稿但无 beats 细纲（流程事实，供核对）"))
+
+    # ---- 字数带偏离（只报数） ----
+    if band_ok:
+        lo, hi = band
+        for tok, _, text in evidence.final_chapters(book):
+            c = common.cjk_count(text)
+            if c < lo or c > hi:
+                warnings.append(_err("word_band_deviation", f"{tok}: 字数 {c} 在目标带 [{lo}, {hi}] 之外"))
+
+    # ---- 线逾期（算术事实） ----
+    try:
+        g = evidence.gaps(book)
+        for item in g["foreshadows"] + g["misunderstandings"]:
+            if item["overdue"]:
+                warnings.append(_err(
+                    "line_overdue",
+                    f"{item['id']}: target_ch={item['target_ch']} < 已定稿 "
+                    f"{g['max_final_chapter']} 章"))
+    except (ValueError, FileNotFoundError) as exc:
+        errors.append(_err("state_unreadable", f"lines 不可读: {exc}"))
+
+    # ---- tics 命中（project.style_guards × 定稿正文，纯计数） ----
+    guards = [x for x in (proj.get("style_guards") or []) if isinstance(x, str) and x]
+    if guards:
+        for tok, _, text in evidence.final_chapters(book):
+            for gtxt in guards:
+                c = text.count(gtxt)
+                if c:
+                    warnings.append(_err("style_guard_hit",
+                                         f"{tok}: 「{gtxt}」出现 {c} 次"))
+
+    # ---- form 占比（>40% 卷内，数出来供主控调整） ----
+    for vol, rec in evidence.form_distribution(book).items():
+        for form, share in rec.get("shares", {}).items():
+            if share > FORM_SHARE_LIMIT:
+                warnings.append(_err("form_share_over_limit",
+                                     f"{vol}: form「{form}」占比 {share:.0%} > {FORM_SHARE_LIMIT:.0%}"))
+    stats["errors"] = len(errors)
+    stats["warnings"] = len(warnings)
+    return {"schema": "novel-studio.check/v1", "ok": not errors,
+            "errors": errors, "warnings": warnings, "stats": stats}

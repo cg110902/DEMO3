@@ -1,0 +1,23 @@
+[project]
+name = "novel-studio"
+version = "0.1.0"
+description = "LLM 主导的五阶段小说流水线：协议文档 + 确定性引擎（纯 stdlib）"
+requires-python = ">=3.10"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[tool.ruff]
+line-length = 118
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM", "RET"]
+ignore = ["RET504", "SIM105"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B017", "E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
