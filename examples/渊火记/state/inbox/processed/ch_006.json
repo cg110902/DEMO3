@@ -1,0 +1,120 @@
+{
+ "schema": "novel-studio.state-mutation/v2",
+ "chapter": "ch_006",
+ "operation_id": "ch_006.syncer.1129-6",
+ "current": {
+  "time": "启元十年十一月初十夜至十一日午后",
+  "location": "盐行柜上",
+  "present_characters": [
+   "沈拓"
+  ],
+  "situation": "渊火夜半亮如白昼（异象持续·未解）；灶户全家无伤但灶房废；'平'册禁手之规已知；'誊'字之灰入目未入账",
+  "equipment": "小本（黑井录毕）；灶房钥匙（仍挂腰上，无灶可开）"
+ },
+ "entities": [
+  {
+   "action": "upsert",
+   "name": "沈拓",
+   "type": "person",
+   "summary": "渊口守卒·盐行帮账；三章钓鱼人今为鱼；灶毁之日未回现场",
+   "aliases": [
+    "拓子",
+    "小沈"
+   ],
+   "card": "characters/protagonist.md",
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "黑玉佩",
+   "type": "item",
+   "summary": "军械司督造印信样式；ch_004 弃置后被取走，ch_006 '来路'三线并账兑现为'去处'悬念——现状：推定他人持有",
+   "aliases": [
+    "玉佩",
+    "督造印"
+   ],
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "老周",
+   "type": "person",
+   "summary": "哨棚值录；收沈拓转交之压惊钱（记'周'），灶毁夜与沈拓并肩捞灰",
+   "aliases": [],
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "断簇箭",
+   "type": "item",
+   "summary": "半截生铜裹新布条、铜上一枚断箭簇；ch_006 灶毁夜后去向不明——现状：失踪于塌口北（未取而失）",
+   "aliases": [
+    "箭簇"
+   ],
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "渊口",
+   "type": "place",
+   "summary": "无底裂口，冒暖气与长明火；ch_006 东沿塌一线吞灶房而火不灭；夜半亮如白昼。近况待清洗",
+   "aliases": [
+    "渊"
+   ],
+   "status": "active"
+  }
+ ],
+ "lines": [
+  {
+   "kind": "foreshadow",
+   "action": "resolve",
+   "id": "GUN-001"
+  },
+  {
+   "kind": "foreshadow",
+   "action": "plant",
+   "name": "蓝布官册灰堆之谜",
+   "plant_ch": 6,
+   "target_ch": 12,
+   "plan": "longline：卷二；灰里'誊'字与烧册老仆的关联；沈拓尚未起念"
+  }
+ ],
+ "timeline": {
+  "events": [
+   {
+    "time": "十一月初十夜半",
+    "event": "渊口东沿塌一线，吞灶房半间而渊火不灭；夜半亮如白昼",
+    "chapter": "ch_006"
+   },
+   {
+    "time": "十一月初十丑时至寅时",
+    "event": "捞灰；笔杆墨渍；黑井录事",
+    "chapter": "ch_006"
+   }
+  ]
+ },
+ "ledger": {
+  "transactions": [
+   {
+    "pool": "standard_currency",
+    "delta": 1,
+    "type": "income",
+    "subject": "压惊钱一枚（灶头家见者有份）",
+    "counterparty": "灶头婆娘",
+    "chapter": "ch_006"
+   },
+   {
+    "pool": "standard_currency",
+    "delta": -1,
+    "type": "expense",
+    "subject": "转交老周（界石之钱补交）",
+    "counterparty": "老周",
+    "chapter": "ch_006"
+   }
+  ]
+ },
+ "synopsis": {
+  "title": "亮如白昼",
+  "text": "渊口夜塌，吞灶房而火不灭，亮如白昼照见全镇。沈拓在塌口捞灰：灶房没了，火种没断；黑玉佩下落与'誊'字之灰并成一本新账——蓝布官册灰堆之谜开卷。"
+ }
+}

@@ -1,0 +1,15 @@
+{"schema":"novel-studio.state-mutation/v2","chapter":"ch_004","operation_id":"ch_004.syncer.1129-4",
+ "current":{"time":"启元十年十一月初六至初七卯时","location":"渊口北岸·沈拓铺房",
+            "present_characters":["沈拓"],
+            "situation":"主动弃佩成'局'：佩失踪、十五文纸条为殿影手笔（还账兼讨手）；屋未被盗但油壶遭验封；察觉栅栏四面有钩",
+            "equipment":"雪枝油壶（遭复封，浅痕记档）；三角纸条'十五'（在袖）；小本新栏'局'已立"},
+ "entities":[
+   {"action":"upsert","name":"沈拓","type":"person","summary":"渊口守卒；弃佩钓鱼反被看穿半层；膝头冻伤、受老周干姜之情","aliases":["拓子","小沈"],"card":"characters/protagonist.md","status":"active"},
+   {"action":"upsert","name":"黑玉佩","type":"item","summary":"军械司督造印样式；初六夜被沈拓弃置钓鱼，为拾佩者取走，下落不明——现状：失踪于北岸栅栏豁口；纸条'十五'为其持有者回函","aliases":["玉佩","督造印"],"status":"active"},
+   {"action":"upsert","name":"老周","type":"person","summary":"哨棚值录兼本月祠堂钥匙轮值；替沈拓圆点卯、门坎留干姜装糊涂——镇上有分量的沉默","aliases":[],"status":"active"},
+   {"action":"upsert","name":"殿影","type":"person","summary":"三证加一笔：倒着走的脚印+抹痕的新雪+复封油壶的轻手；知沈拓一切查册动作，替其'对平'香烛钱","aliases":["影子"],"status":"active"},
+   {"action":"upsert","name":"常安","type":"person","summary":"村长；初六夜'给-收'篮礼试探（收因无人受）；放篮前先蹲守——观察者也是观察者","aliases":["村长","老丈"],"card":"characters/village_head.md","status":"active"}],
+ "lines":[{"kind":"foreshadow","action":"remind","id":"GUN-001","note":"饵被反用：佩入他人手，'来路'追问升级为'去处'追问"}],
+ "timeline":{"events":[{"time":"十一月初六夜至初七晨","event":"沈拓弃佩钓鱼；村长篮礼未成；殿影取佩留'十五'条","chapter":"ch_004"},
+                        {"time":"十一月初六亥二","event":"村长放针线篮于栅栏根又取回（沈拓暗处目击全程）","chapter":"ch_004"}]},
+ "synopsis":{"title":"雪饵","text":"沈拓凉手摆饵伏雪一夜：村长借篮试探无人受礼而自收，黑影自祠堂方向倒步取佩，留三角纸条夹十五文对平香烛账。佩离手、局立栏，四面有钩。"}}

@@ -34,24 +34,6 @@
       "pool": "standard_currency",
       "subject": "香烛钱（查册）",
       "type": "expense"
-    },
-    {
-      "balance_after": 186,
-      "chapter": "ch_006",
-      "counterparty": "灶头婆娘",
-      "delta": 1,
-      "pool": "standard_currency",
-      "subject": "压惊钱一枚（灶头家见者有份）",
-      "type": "income"
-    },
-    {
-      "balance_after": 185,
-      "chapter": "ch_006",
-      "counterparty": "老周",
-      "delta": -1,
-      "pool": "standard_currency",
-      "subject": "转交老周（界石之钱补交）",
-      "type": "expense"
     }
   ]
 }

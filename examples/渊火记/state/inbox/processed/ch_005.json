@@ -1,0 +1,78 @@
+{
+ "schema": "novel-studio.state-mutation/v2",
+ "chapter": "ch_005",
+ "operation_id": "ch_005.syncer.1129-5",
+ "current": {
+  "time": "启元十年十一月初七亥时至初八丑时",
+  "location": "渊口北岸·岗哨至铺房",
+  "present_characters": [
+   "沈拓",
+   "老周"
+  ],
+  "situation": "夜巡权被'候核'冻结至初八；换班帖落'准'戳自证在场；左膝冻伤未治；断簇箭现于第四桩豁口（原位未取）",
+  "equipment": "油壶（遭验封留浅痕）；'局'栏小本；干姜半块（老周情，已还煮茶）"
+ },
+ "entities": [
+  {
+   "action": "upsert",
+   "name": "沈拓",
+   "type": "person",
+   "summary": "渊口守卒（初八起调盐行帮账）；落戳自保一夜；三支笔里认得两支",
+   "aliases": [
+    "拓子",
+    "小沈"
+   ],
+   "card": "characters/protagonist.md",
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "老周",
+   "type": "person",
+   "summary": "哨棚值录兼祠堂钥轮值；冰坡获救，捡筹九枚留一枚予沈拓；缝签袋不答账",
+   "aliases": [],
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "断簇箭",
+   "type": "item",
+   "summary": "半截生铜裹新布条、铜上一枚断箭簇；初八丑时现于第四断桩豁口，簇脚雪软=新置。现状：原位插立，沈拓未取",
+   "aliases": [
+    "箭簇"
+   ],
+   "status": "active"
+  }
+ ],
+ "lines": [
+  {
+   "kind": "foreshadow",
+   "action": "remind",
+   "id": "GUN-002",
+   "note": "换班帖瘦锋与案牍体同源、异于镇上圆笔与书吏圈笔——'誊册之手'已伸进镇公所"
+  }
+ ],
+ "timeline": {
+  "events": [
+   {
+    "time": "十一月初七亥时至子初",
+    "event": "白毛灾：门帘断、两垛苫布揭顶、损桩二；沈拓绳救老周于冰坡",
+    "chapter": "ch_005"
+   },
+   {
+    "time": "十一月初七子初",
+    "event": "接公所换班帖（初八起夜巡并籍、沈拓调盐行），自落'准'戳",
+    "chapter": "ch_005"
+   },
+   {
+    "time": "十一月初八丑时",
+    "event": "第四断桩豁口现断簇箭（新置）；沈拓一望未取",
+    "chapter": "ch_005"
+   }
+  ]
+ },
+ "synopsis": {
+  "title": "白毛",
+  "text": "风暴夜连轴：固栅救人接帖一气。调令笔迹出自誊册一系，朱批候核反坐实'沿旧'；他以一枚更房戳买回一夜，丑时闩门，见箭立旧豁口——雪未冻，局未散。"
+ }
+}

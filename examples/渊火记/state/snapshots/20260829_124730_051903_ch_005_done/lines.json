@@ -5,7 +5,7 @@
       "name": "村长与黑玉佩旧案",
       "plan": "卷尾ch_006底稿到手即焚，兑现'玉佩来路'半张",
       "plant_ch": 1,
-      "status": "Resolved",
+      "status": "Reminded",
       "target_ch": 6
     },
     {
@@ -15,14 +15,6 @@
       "plant_ch": 3,
       "status": "Reminded",
       "target_ch": 6
-    },
-    {
-      "id": "GUN-003",
-      "name": "蓝布官册灰堆之谜",
-      "plan": "longline：卷二；灰里'誊'字与烧册老仆的关联；沈拓尚未起念",
-      "plant_ch": 6,
-      "status": "Planted",
-      "target_ch": 12
     }
   ],
   "misunderstandings": [
