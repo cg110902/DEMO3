@@ -17,7 +17,7 @@ DOCS = {
     "craft": ROOT / "agents" / "rules" / "novel_craft.md",
     "genre_guide": ROOT / "agents" / "genre_guide.md",
 }
-SKILL_DIRS = ["director", "beats-builder", "drafter", "guard", "syncer"]
+SKILL_DIRS = ["director", "beats-builder", "drafter", "guard", "syncer", "reader"]
 LINE_BUDGET = {"AGENTS": 120, "workflow": 260, "craft": 280, "genre_guide": 160}
 SKILL_BUDGET = 70
 TEMPLATE_BUDGET = 40

@@ -32,6 +32,12 @@
 > `guard_extra_scoped`，键扩容三处同步流程首走。E4 变体落地：status 下一步区账上提醒
 > （failed/ 积压 + 距到期 ≤2 章的线）。均属附录 A 既有类目（校验与统计），白名单未扩。
 
+> **v1.5（2026-08-29，M6 收官批）**：D3 存量清点——补 `candidate_leak` 拦截（禁令 6 全量
+> 兑付，只扫 manuscript）、AGENTS 不变量口径改准；E3 分景起草入任务书/drafter 合同（字数自查
+> 吃 `evidence file <raw> <章>`）；R1 reader 岗位 SKILL + workflow「卷末」节 + 交接"恰好三样"
+> 豁免款；R2 剧透盲测协议（M/N 三档牌，只喂「目标」节防剧透）；R3 target_ch 全局章号口径
+> 入 craft。M6 批次（D1–D3/P1–P3/E1–E4/R1–R3）全部落地，104 测全绿。
+
 ---
 
 ## 1. 目标与裁决记录

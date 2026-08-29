@@ -164,3 +164,12 @@ def test_beats_guard_extra_key_allowed(tmp_path):
     b.write_text("---\nform: 单场景章\nguard_extra: 数|灯花\n---\n\n拍点。\n", encoding="utf-8")
     assert [e for e in checks.run_checks(book)["errors"]
             if e["code"] == "beats_fm_extra_keys"] == []
+
+
+def test_candidate_leak_blocked(tmp_path):
+    # AGENTS 禁令6 兑付：candidate_* 工程痕迹禁入稿件（check 拦，D3 清点落地）
+    book = _mkbook(tmp_path, healthy=True)
+    f = book / "manuscript/vol_01/final/ch_001.md"
+    f.write_text("# 第一章\n\n正文。\n\ncandidate_2 号方案\n", encoding="utf-8")
+    errs = [e for e in checks.run_checks(book)["errors"] if e["code"] == "candidate_leak"]
+    assert len(errs) == 1 and "ch_001" in errs[0]["msg"]

@@ -15,6 +15,7 @@ from pathlib import Path
 from . import common, evidence, state
 
 SLOT_RE = re.compile(r"\{\{\s*slot:")
+CANDIDATE_RE = re.compile(r"candidate_[0-9A-Za-z_*]")
 FORM_SHARE_LIMIT = 0.40
 
 
@@ -152,6 +153,17 @@ def run_checks(book: Path) -> dict:
             continue
     for rel in slot_hits:
         errors.append(_err("unfilled_slot", f"{rel} 存在未填充槽位 {{{{slot:...}}}}（Stage 0 未完成）"))
+
+    # ---- 禁令6：稿件禁工程痕迹（candidate_* 泄漏进 manuscript）----
+    ms = book / "manuscript"
+    if ms.is_dir():
+        for md in sorted(ms.rglob("*.md")):
+            try:
+                if CANDIDATE_RE.search(md.read_text(encoding="utf-8", errors="ignore")):
+                    errors.append(_err("candidate_leak",
+                        f"{md.relative_to(book)} 含 candidate_* 工程痕迹（AGENTS 禁令6：禁入稿件）"))
+            except OSError:
+                continue
 
     # ---- beats 协议（机械部分）：同 form 连章必须给理由；form 缺失；超键拦截 ----
     beats = sorted(common.find_chapter_files(book, "beats"),
