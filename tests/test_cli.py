@@ -50,3 +50,23 @@ def test_missing_book_blocks_commands(tmp_path, capsys):
     assert cli.main(["check", "-w", ghost]) == 1
     assert cli.main(["sync", "ch_001", "-w", ghost]) == 1
     assert cli.main(["export", "-w", ghost]) == 1
+
+
+def test_snapshot_list_explicit_subcommand(tmp_path):
+    book = tmp_path / "b"
+    rc = cli.main(["init", "-w", str(book), "-t", "列表", "-g", "都市", "-p", "甲"])
+    assert rc == 0
+    (book / "state" / "snapshots").mkdir(parents=True, exist_ok=True)
+    (book / "state" / "snapshots" / "20260101_000000_ch_001_done").mkdir()
+    import contextlib
+    import io
+    import json
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        rc = cli.main(["snapshot", "list", "-w", str(book)])
+    assert rc == 0 and "ch_001_done" in buf.getvalue()   # 文档口径的显式 list 必须可用
+    buf2 = io.StringIO()
+    with contextlib.redirect_stdout(buf2):
+        rc = cli.main(["snapshot", "list", "-w", str(book), "--json"])
+    data = json.loads(buf2.getvalue())
+    assert rc == 0 and any(n.endswith("ch_001_done") for n in data["snapshots"])

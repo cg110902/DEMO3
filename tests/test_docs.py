@@ -143,3 +143,10 @@ def test_templates_budget_and_guidance_only():
         for block in guid:
             body_lines = [x for x in block.splitlines() if x.strip() not in ("<!--", "-->")]
             assert len(body_lines) <= 8, f"{fn} 引导注释超过 6~8 行（模板只说装什么）"
+
+
+def test_engine_readme_points_to_whitelist():
+    # 引擎接手者地图不得失踪：存在 + 指向 PLAN 附录A（能力封顶的单一权威）
+    p = ROOT / "engine" / "README.md"
+    assert p.is_file()
+    assert "附录 A" in p.read_text(encoding="utf-8")
