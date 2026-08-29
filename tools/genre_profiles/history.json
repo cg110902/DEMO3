@@ -1,0 +1,55 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "history",
+  "label": "历史 / 架空 / 种田权谋 / 古代",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      30,
+      50
+    ],
+    "action": [
+      25,
+      45
+    ],
+    "describe": [
+      12,
+      32
+    ]
+  },
+  "tone_policy": {
+    "mode": "mixed",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "历史题材基调灵活：种田发展可明快踏实，权谋宫斗可阴暗压抑，战争乱世可悲壮苍凉，由子类型与场景决定。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger",
+    "misunderstandings"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 22,
+  "describe_ceiling": 38,
+  "combat_heavy": false,
+  "economy_required": true,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "人物对白可带时代质感但必须讲人话、有利益算计，严禁古装舞台剧念白与成语批发——注意：'老朽''抱拳领命'等词在符合身份与语境时可自然使用，检测的是'念白感'而非单词本身；权谋靠信息差与体制机锋推进，反派要有格局与智商，不得脸谱化叫嚣；种田/发展要有可量化积累（钱粮、人手、地盘），时代细节为人物与剧情服务、不堆砌。历史细节需考据准确（或在架空设定中自洽）。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖 。）"
+}

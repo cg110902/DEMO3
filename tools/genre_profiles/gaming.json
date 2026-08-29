@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "gaming",
+  "label": "游戏 / 电竞 / 网游 / 虚拟全息 / 直播",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      30,
+      55
+    ],
+    "action": [
+      25,
+      50
+    ],
+    "describe": [
+      10,
+      30
+    ]
+  },
+  "tone_policy": {
+    "mode": "bright_preferred",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "游戏/电竞常规场景热血明快，比赛/绝境场景可紧张压抑，由场景决定。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 22,
+  "describe_ceiling": 35,
+  "combat_heavy": true,
+  "economy_required": true,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "游戏/电竞核心是成长与竞技，游戏内操作要有具体机制与数据支撑，不能只说'牛逼'；电竞比赛重战术博弈与心理战，选手有真实的技术特点与成长弧线；网游/全息要有自洽的游戏经济与装备体系；直播/弹幕可作为氛围调味但不能喧宾夺主；战队/队友各有分工与性格，避免主角一人carry。常规场景热血明快，比赛/绝境可紧张压抑。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

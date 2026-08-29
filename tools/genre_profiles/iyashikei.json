@@ -1,0 +1,53 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "iyashikei",
+  "label": "治愈系 / 日常 / 慢生活 / 田园美食 / 温馨",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      30,
+      55
+    ],
+    "action": [
+      10,
+      25
+    ],
+    "describe": [
+      25,
+      50
+    ]
+  },
+  "tone_policy": {
+    "mode": "bright_preferred",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "治愈系核心是温暖宁静与生活质感，明快温馨是基调；可偶尔有小波折但不搞强冲突，阴暗场景极少且短暂。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs"
+  ],
+  "stall_window": 5,
+  "scheduler": {
+    "remind_lead": 5,
+    "dormant_gap": 8,
+    "longline_interval": [
+      12,
+      20
+    ]
+  },
+  "dialogue_floor": 20,
+  "describe_ceiling": 55,
+  "combat_heavy": false,
+  "economy_required": false,
+  "ending_style": "quiet_close",
+  "pov_default": "third_limited",
+  "director_notes": "治愈系核心是温暖宁静与生活质感，节奏慢、冲突弱、细节丰；美食/田园/手工/萌宠等元素要有具体可感的细节（食材处理、季节变化、动植物互动），不能只说'好吃''可爱'；人物关系温和，有小误会但快速化解，不搞强冲突与虐心；环境描写占比高（25%~50%），四季/天气/自然是重要叙事元素；章末可安静收尾（余韵/留白），不一定要强断章钩子。字数仍须落在全局铁律区间（2200~4000，建议 3200），可在区间内偏少，节奏由生活心流决定。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

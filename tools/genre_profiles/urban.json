@@ -1,0 +1,55 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "urban",
+  "label": "都市 / 异能 / 职场商战 / 娱乐",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      35,
+      60
+    ],
+    "action": [
+      20,
+      45
+    ],
+    "describe": [
+      8,
+      25
+    ]
+  },
+  "tone_policy": {
+    "mode": "bright_preferred",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "都市常规场景明快接地气，商战/阴谋/底层场景可压抑冷峻，由场景决定。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger",
+    "misunderstandings"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 25,
+  "describe_ceiling": 30,
+  "combat_heavy": false,
+  "economy_required": true,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "都市靠世情与机锋对白驱动，台词占比可自然上浮到40%~60%，人物说话要有利益算盘与现实微机锋；爽点来自信息差翻盘、身份反差与现实博弈，少用超自然蛮力；场景贴近真实生活质感，环境描写点到为止；警惕悬浮与脸谱化反派。商战/阴谋场景可压抑冷峻，日常/逆袭场景明快接地气。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

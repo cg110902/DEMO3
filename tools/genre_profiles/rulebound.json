@@ -1,0 +1,53 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "rulebound",
+  "label": "规则怪谈 / SCP / 异常 / 副本求生",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      25,
+      50
+    ],
+    "action": [
+      25,
+      50
+    ],
+    "describe": [
+      15,
+      35
+    ]
+  },
+  "tone_policy": {
+    "mode": "dark_preferred",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "规则怪谈核心氛围是未知规则下的生存紧张与诡异感，阴暗压抑是核心美学；安全区/日常可适度明快形成反差。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs"
+  ],
+  "stall_window": 2,
+  "scheduler": {
+    "remind_lead": 4,
+    "dormant_gap": 4,
+    "longline_interval": [
+      6,
+      10
+    ]
+  },
+  "dialogue_floor": 18,
+  "describe_ceiling": 40,
+  "combat_heavy": false,
+  "economy_required": false,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "规则体系是第一生命线：每条规则要清晰、可推理、前后绝对一致，解谜靠角色与读者同步掌握的规则推演（线索公平），不靠主角开挂；每个副本有独立规则与代价，失败有真实伤亡/损耗；恐怖张力靠规则违背的后果与氛围留白，不靠形容词堆'诡异'；主线（逃出循环/系统真相）长线伏笔按6~10章回唤，避免副本间失忆断线。阴暗压抑是核心美学，安全区明快仅作反差。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "military",
+  "label": "军事 / 战争 / 军旅 / 特种兵 / 谍战",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      20,
+      45
+    ],
+    "action": [
+      35,
+      60
+    ],
+    "describe": [
+      12,
+      32
+    ]
+  },
+  "tone_policy": {
+    "mode": "mixed",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "军事战争基调沉重冷峻，日常/战友互动可明快温暖，战场/谍战紧张压抑，由场景决定。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 15,
+  "describe_ceiling": 38,
+  "combat_heavy": true,
+  "economy_required": true,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "军事战争核心是使命与牺牲，战术/装备/编制要有专业细节支撑，不能只说'打仗'；军人有真实的身体极限与心理压力，战斗/训练/休整有真实周期；命令链与军纪严格，角色行为符合军阶与身份；谍战重信息差与心理博弈，卧底有真实的身份危机与道德困境。军事数据需考据准确（或在设定中自洽）。基调沉重冷峻，战友互动可明快温暖作反差。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

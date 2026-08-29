@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "lightnovel",
+  "label": "轻小说 / 异世界转生 / 冒险者公会 / 魔王勇者",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      35,
+      60
+    ],
+    "action": [
+      20,
+      45
+    ],
+    "describe": [
+      12,
+      30
+    ]
+  },
+  "tone_policy": {
+    "mode": "bright_preferred",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "轻小说常规场景明快轻松，战斗/危机场景可紧张，黑暗向轻小说可阴暗，由子类型决定。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 28,
+  "describe_ceiling": 35,
+  "combat_heavy": false,
+  "economy_required": true,
+  "ending_style": "strong_hook",
+  "pov_default": "first",
+  "director_notes": "轻小说核心是轻松愉快的异世界冒险，对白密度高（35%~60%），角色有独特口癖与性格标签但不能脸谱化；第一人称视角常见，内心吐槽是特色但需适度；魔法/技能/等级体系前后一致，冒险者公会/任务/委托有真实经济逻辑；异世界转生要有'前世知识'与'异世界规则'的碰撞张力；魔王/勇者/精灵/矮人/龙族等经典种族可创新设定但需自洽。常规场景明快轻松，黑暗向可阴暗。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

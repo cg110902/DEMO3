@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "romance",
+  "label": "言情 / 纯爱 / 甜宠 / 婚恋 / 古言现言",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      40,
+      65
+    ],
+    "action": [
+      10,
+      30
+    ],
+    "describe": [
+      15,
+      35
+    ]
+  },
+  "tone_policy": {
+    "mode": "adaptive",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "言情基调随子类型灵活：甜宠明快温暖，虐恋压抑揪心，破镜重圆有张有弛。无通用基调禁令。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "misunderstandings"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 30,
+  "describe_ceiling": 40,
+  "combat_heavy": false,
+  "economy_required": false,
+  "ending_style": "emotional_resonance",
+  "pov_default": "multiple_pov",
+  "director_notes": "言情核心是情感张力与关系发展，对白是第一驱动力（占比可到40%~65%），人物说话要有情感层次与潜台词；误会(MIS)是核心引擎但必须有合理的信息差基础，不能为虐而虐；角色成长弧线围绕情感成熟与自我认知展开；甜宠场景重细节与互动，虐恋场景重克制与留白；多视角切换可增强情感代入但需注意信息差控制。章末可卡在情感转折点或悬念点，不一定要强冲突断章。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

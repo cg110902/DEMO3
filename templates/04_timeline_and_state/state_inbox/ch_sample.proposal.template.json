@@ -1,0 +1,79 @@
+{
+  "schema": "novel-studio.state-mutation/v1",
+  "chapter": "ch_001",
+  "operation_id": "ch_001.state-sync.v1",
+  "synopsis": "主角于青石坊市遭遇盘剥危机，利用药理眼界与信息差反制管事，暗中换取启动资金并获取首批修道资财。",
+  "current_state": {
+    "time": "大乾宣德三年·七月既望·申时三刻",
+    "location": "青石城·南市百草堂后院偏厅",
+    "present_characters": [
+      "陈昂 (收敛气息，暗中清点药材与文书)",
+      "王掌柜 (面色阴晴不定，惊疑退居案后)"
+    ],
+    "power_level": "炼气二层 (气血充盈，灵力微显)",
+    "abilities": "《基础吐纳诀》熟练、药石精辨词条",
+    "injury": "右臂轻度筋络酸胀（调息半个时辰即可恢复）",
+    "assets": "精制止血散 3 包、青锋短刃一把、粗布旧袍、青石坊市牙牌",
+    "equipment": "青锋短刃一把、粗布旧袍",
+    "situation": "初战告捷，顺利摆脱地头蛇盘剥，已掌握百草堂暗账线索，正准备连夜前往黑市核验灵药品质。"
+  },
+  "guns": [
+    {
+      "action": "plant",
+      "id": "GUN-001",
+      "name": "百草堂阴阳账册残页",
+      "target_ch": 5,
+      "plan": "在第 5 章引爆，作为借力打力借巡察使之手查封黑店的铁证"
+    },
+    {
+      "action": "plant",
+      "id": "GUN-002",
+      "name": "陈昂脑中现代药理知识的来历",
+      "target_ch": 12,
+      "plan": "长线伏笔：身世/来历悬念，中期逐步揭开（与他仅凭辨药眼力立足的表层人设形成反差）"
+    }
+  ],
+  "misunderstandings": [
+    {
+      "action": "plant",
+      "parties": "王掌柜 误会 陈昂",
+      "content": "误以为陈昂背后有郡城世家大药师撑腰，不敢贸然下死手",
+      "truth": "陈昂仅凭脑中现代药理知识与先知辨药",
+      "level": "1 级 (潜伏发酵)",
+      "target_ch": 4
+    }
+  ],
+  "growth_arcs": [
+    {
+      "name": "陈昂",
+      "action": "update",
+      "stage": "Stage 1【主动求存】",
+      "inciting_event": "第 1 章利用药石眼界反制盘剥并全身而退",
+      "strategy": "从被动挨宰转为主动求存：开始设定目标、借势与利用信息差自保反击、积累资源"
+    }
+  ],
+  "timeline": [
+    {
+      "time": "宣德三年七月十六·申时",
+      "event": "陈昂于百草堂反制王掌柜，以次品药渣辩出极品药性，赚取第一桶金 50 两银。"
+    }
+  ],
+  "transactions": [
+    {
+      "resource": "standard_currency",
+      "type": "income",
+      "delta": 50,
+      "subject": "药理辨药溢价收益",
+      "counterparty": "百草堂王掌柜",
+      "note": "第一笔启动资金入账"
+    },
+    {
+      "resource": "standard_currency",
+      "type": "expense",
+      "delta": -20,
+      "subject": "购置基础药材",
+      "counterparty": "百草堂",
+      "note": "记账约定：delta 正收负支——type='expense' 的 delta 必须为负数，正负矛盾会被引擎拒绝"
+    }
+  ]
+}

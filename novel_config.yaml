@@ -1,0 +1,53 @@
+# Universal Novel Studio - 全局声明式配置文件
+# 全题材自适应版本：字数/配比/基调由 genre_profile.json（题材档案）控制，本文件仅为全局工程配置。
+# 状态文件以 JSON 为机器 SSOT，Markdown 为自动渲染的只读视图。
+
+project:
+  name: "镇守魔教圣女？我一天涨一年功力" # 当前项目书名 (开新书时由 studio.py init 自定义)
+  workspace_dir: "novel_workspace" # 唯一事实真值源目录 (SSOT)
+  default_genre: "东方玄幻 系统流 升级流 面板" # 默认题材 (init 时可指定，支持17种内置题材，运行 studio.py genre --list 查看)
+
+workflow:
+  mode: "automatic" # automatic：Stage 1-4 由 Agent 连续推进，用户只审查终稿；manual：关键节点逐步确认。切换：python studio.py mode --set manual|automatic
+  autonomous_decision_policy: "director_agent_selects_and_records" # 自动模式由总策划 Agent 选择 ABC 并记录理由
+  auto_recycle_subagents: true # Sub-Agent 瞬态即焚与 100% 自动生命周期回收
+  # 以下长线保障为“声明式意图 + 默认值”，由 Agent 遵循 agents/rules/ 文档执行；
+  # 均为“默认/参考”级约束 。
+  # 例外必须登记在 project_bible.md 或 director_notes，写明铺垫、代价与批准依据。
+  long_arc_safeguards:
+    max_major_power_level_jump_per_chapter: 0 # 默认单章不跨大层；含铺垫与代价的例外须登记
+    max_minor_power_steps_per_chapter: 1 # 默认单章至多推进一个小阶梯；按题材与场景心流调整
+    require_simulation_friction: true # 默认：机制突破/模拟推演应带真实波折、瓶颈或未竟之憾
+    anti_plot_homogenization: true # 默认：避免模式化套路复读与脸谱化反派；允许“教科书式套路”作为书中自觉运用的风格
+    three_tier_anticipation_model: true # 参考模型：显性目标+隐性危机+倒计时炸弹，按章节心流组合，治愈/日常可弱化
+
+generation:
+  # 字数参考区间：以 genre_profile.word_count（可在书级 00_meta/genre_profile.json 微调）为准，
+  # 由起草/审校环节把关。
+  target_word_count:
+    min: 2200
+    max: 4000
+    recommended: 3200
+
+subagent:
+  # 宿主编排策略：配置声明权限，实际创建/隔离/回收由宿主负责；CLI 本身不实现 invoke_subagent。
+  auto_recycle_subagents: true
+  auto_kill_after_delivery: true # 交付后单轮内物理销毁 Sub-Agent
+  drafting_agent:
+    role_id: "novel-chapter-drafter"
+    display_name: "青冥雷引"
+    tools: [] # 默认不调用工具；上下文由主控预先准备
+    optional_readonly_tools:
+      - "pack"
+      - "genre"
+      - "memory"
+      - "schedule"
+    write_allowlist:
+      - "05_manuscript/vol_*/raw_drafts/ch_xxx_vN.md"
+    forbidden_tools:
+      - "sync"
+      - "apply"
+      - "snapshot"
+      - "rollback"
+      - "clean"
+      - "export"

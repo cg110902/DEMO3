@@ -1,0 +1,55 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "xuanhuan",
+  "label": "玄幻 / 仙侠 / 修仙 / 系统模拟器",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      25,
+      45
+    ],
+    "action": [
+      35,
+      60
+    ],
+    "describe": [
+      10,
+      30
+    ]
+  },
+  "tone_policy": {
+    "mode": "bright_preferred",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "玄幻常规场景偏好明快从容，但秘境/绝境/反派阵营可阴暗压抑，由场景决定。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger",
+    "misunderstandings"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      10
+    ]
+  },
+  "dialogue_floor": 15,
+  "describe_ceiling": 35,
+  "combat_heavy": true,
+  "economy_required": true,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "以境界/里程碑推进为爽点骨架：每章要有可量化的实力、资源或地位推进（突破、得宝、布局兑现），严禁单章暴涨境界；战斗干脆利落、结果反差强，拒绝慢动作拆招；系统/模拟器结算必须带真实波折与代价；长线金手指伏笔按8~10章周期回唤。常规场景明快从容，秘境/绝境可阴暗压抑，由场景心流决定。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

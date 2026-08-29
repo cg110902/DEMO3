@@ -1,0 +1,53 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "horror",
+  "label": "恐怖 / 克苏鲁 / 灵异 / 心理恐怖",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      15,
+      40
+    ],
+    "action": [
+      15,
+      40
+    ],
+    "describe": [
+      25,
+      50
+    ]
+  },
+  "tone_policy": {
+    "mode": "dark_preferred",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "恐怖题材的核心就是阴暗、压抑、未知与绝望。明快场景仅作为反差或安全区使用，绝不能作为通用基调。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs"
+  ],
+  "stall_window": 2,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 4,
+    "longline_interval": [
+      6,
+      10
+    ]
+  },
+  "dialogue_floor": 8,
+  "describe_ceiling": 55,
+  "combat_heavy": false,
+  "economy_required": false,
+  "ending_style": "strong_hook",
+  "pov_default": "first",
+  "director_notes": "恐怖的核心是未知、无力与绝望，而非jump scare堆砌；氛围营造靠环境细节、感官剥夺与渐进式异常，不靠形容词说'恐怖'；克苏鲁系强调知识诅咒与理性崩塌，心理恐怖靠不可靠叙述与现实扭曲；第一人称视角可增强代入感但需注意信息差控制；阴暗压抑是核心美学，严禁强行明快化。安全区/日常场景作为反差使用，越安全越衬托后续恐怖。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "infinite",
+  "label": "无限流 / 轮回 / 任务世界 / 主神空间",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      25,
+      50
+    ],
+    "action": [
+      30,
+      55
+    ],
+    "describe": [
+      12,
+      32
+    ]
+  },
+  "tone_policy": {
+    "mode": "adaptive",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "无限流每个任务世界基调不同（恐怖本/玄幻本/科幻本/历史本），应随世界灵活切换，主神空间可固定一种基调。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger"
+  ],
+  "stall_window": 2,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 4,
+    "longline_interval": [
+      6,
+      10
+    ]
+  },
+  "dialogue_floor": 18,
+  "describe_ceiling": 38,
+  "combat_heavy": true,
+  "economy_required": true,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "无限流核心是多世界穿梭与成长，每个任务世界应有独立的规则与基调（恐怖本阴暗/玄幻本明快/科幻本冷峻），主神空间作为固定枢纽；积分/点数/兑换体系前后一致，技能/血统/装备获取有真实代价；团队角色各有分工与成长弧线，避免主角一人carry；每个世界结束应有收获与损失，回归主神空间后休整与强化。主线（轮回真相/主神目的）长线伏笔按6~10章回唤。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

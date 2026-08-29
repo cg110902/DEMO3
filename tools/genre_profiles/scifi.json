@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "scifi",
+  "label": "科幻 / 机甲 / 星际 / 赛博朋克 / 末世废土",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      25,
+      50
+    ],
+    "action": [
+      30,
+      55
+    ],
+    "describe": [
+      12,
+      35
+    ]
+  },
+  "tone_policy": {
+    "mode": "mixed",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "科幻基调跨度极大：星际探险可宏大开阔，赛博朋克可霓虹迷离，末世废土可压抑绝望，由子类型与场景决定。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 15,
+  "describe_ceiling": 40,
+  "combat_heavy": true,
+  "economy_required": true,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "硬设定必须自洽：科技/异能/灾变规则前后一致，资源（弹药、能源、义体损耗、配给）有真实成本，拒绝凭空产出；用具体物理细节代替空泛形容词，信息给出要有层次（读者与主角同步解谜）；末世/赛博可基调冷峻但人物仍要有烟火气与动机，避免通篇压抑；星际探险可宏大开阔。科幻子类型差异大，应根据具体子类型灵活调整基调与配比。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

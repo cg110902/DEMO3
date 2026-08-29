@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "wuxia",
+  "label": "武侠 / 江湖 / 武林",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      30,
+      50
+    ],
+    "action": [
+      30,
+      50
+    ],
+    "describe": [
+      12,
+      30
+    ]
+  },
+  "tone_policy": {
+    "mode": "mixed",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "武侠有江湖快意也有恩怨情仇，基调随场景灵活切换，无通用禁令。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "misunderstandings"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 20,
+  "describe_ceiling": 35,
+  "combat_heavy": true,
+  "economy_required": false,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "武侠核心是江湖快意与恩怨情仇，战斗描写重意境与招式美感而非数值面板；人物对白可带江湖气但必须讲人话、有动机，严禁舞台剧念白；门派/镖局/帮会等组织有独立利益逻辑；轻功/内功/点穴等设定前后一致。基调随场景灵活切换——酒楼快意可明快，密室复仇可阴暗。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

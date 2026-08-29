@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "mystery",
+  "label": "悬疑 / 推理 / 惊悚犯罪 / 侦探",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      30,
+      55
+    ],
+    "action": [
+      20,
+      45
+    ],
+    "describe": [
+      15,
+      35
+    ]
+  },
+  "tone_policy": {
+    "mode": "dark_preferred",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "悬疑/推理核心氛围是紧张压抑与未知恐惧，阴暗基调是本题材的核心美学而非缺陷；日常/调查场景可适度明快以形成反差。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "misunderstandings"
+  ],
+  "stall_window": 2,
+  "scheduler": {
+    "remind_lead": 4,
+    "dormant_gap": 4,
+    "longline_interval": [
+      6,
+      10
+    ]
+  },
+  "dialogue_floor": 22,
+  "describe_ceiling": 38,
+  "combat_heavy": false,
+  "economy_required": false,
+  "ending_style": "strong_hook",
+  "pov_default": "third_limited",
+  "director_notes": "线索公平：破案关键线索必须在揭晓前自然埋给读者，侦探不得靠顿悟/隐藏信息开挂；每章推进一条可验证的信息差或反转，误会(MIS)与伏笔(GUN)是核心引擎——回唤窗口更紧(提前4章)、沉睡容忍更低(4章)；悬念信息分层释放，章末卡在问题抛出或证据反转点；惊悚氛围靠细节与留白，不靠形容词堆砌。阴暗压抑是本题材核心美学，严禁强行'明快化'。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "realism",
+  "label": "现实主义 / 年代 / 知青 / 改革开放 / 市井民生",
+  "creation_goal": "literary",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      30,
+      55
+    ],
+    "action": [
+      15,
+      35
+    ],
+    "describe": [
+      20,
+      40
+    ]
+  },
+  "tone_policy": {
+    "mode": "mixed",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "现实主义基调随时代与人物命运灵活切换，苦难/压抑/温暖/希望交织，无通用禁令。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs",
+    "economy_ledger"
+  ],
+  "stall_window": 4,
+  "scheduler": {
+    "remind_lead": 4,
+    "dormant_gap": 6,
+    "longline_interval": [
+      10,
+      15
+    ]
+  },
+  "dialogue_floor": 22,
+  "describe_ceiling": 45,
+  "combat_heavy": false,
+  "economy_required": true,
+  "ending_style": "emotional_resonance",
+  "pov_default": "third_limited",
+  "director_notes": "现实主义核心是时代与人的关系，细节考据是生命线（政策、物价、票据、物资、语言习惯必须符合年代）；人物命运与时代大潮紧密交织，个人奋斗受时代限制也受时代推动；经济/生计描写真实可感（工分、粮票、工资、物价），拒绝悬浮；市井民生有烟火气与生活智慧，人物说话符合年代与身份。基调随时代与命运灵活切换，苦难中见温暖，压抑中见希望。章末可卡在时代转折点或人物命运关口，不一定要强冲突。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖。）"
+}

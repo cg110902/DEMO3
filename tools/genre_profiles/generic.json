@@ -1,0 +1,53 @@
+{
+  "schema": "novel-studio.genre-profile/v2",
+  "id": "generic",
+  "label": "全题材通用自适应",
+  "creation_goal": "commercial",
+  "word_count": {
+    "min": 2200,
+    "recommended": 3200,
+    "max": 4000
+  },
+  "ratio_baseline": {
+    "dialogue": [
+      20,
+      55
+    ],
+    "action": [
+      20,
+      55
+    ],
+    "describe": [
+      10,
+      40
+    ]
+  },
+  "tone_policy": {
+    "mode": "adaptive",
+    "bright_allowed": true,
+    "dark_allowed": true,
+    "note": "通用基线无基调禁令。明快/阴暗/压抑/冷峻完全由题材与具体场景决定。"
+  },
+  "state_components": [
+    "current_state",
+    "chekhov_guns",
+    "timeline",
+    "character_growth_arcs"
+  ],
+  "stall_window": 3,
+  "scheduler": {
+    "remind_lead": 3,
+    "dormant_gap": 5,
+    "longline_interval": [
+      8,
+      12
+    ]
+  },
+  "dialogue_floor": 10,
+  "describe_ceiling": 50,
+  "ending_style": "adaptive",
+  "pov_default": "third_limited",
+  "combat_heavy": false,
+  "economy_required": false,
+  "director_notes": "通用自适应基线：无题材特定禁令。基调、配比、断章风格、描写密度均由题材档案与具体场景决定，AI应根据故事心流自由选择最贴切的表达方式。核心铁律仅五条：①限制视角不越界 ②信息差自洽 ③角色动机真实 ④前后因果一致 ⑤无工程标记外泄。（以上为本题材的默认偏好，不是铁律；可按本书 `project_bible` / `director_notes` 与具体场景覆盖 。）"
+}
