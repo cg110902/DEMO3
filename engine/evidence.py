@@ -19,7 +19,7 @@ REP_MIN = 8  # 整句自重复的最小句长（低于此的短句重复属正�
 # 6 个中文 AI 高频句式（§5.7 拟人保险丝的固定清单；书级 tics 由 project.style_guards 追加）
 AI_CONSTRUCTIONS: list[tuple[str, str]] = [
     ("不是…而是…", r"不是[^。！？]{1,15}[，,]?\s*而是"),
-    ("仿佛…一般", r"仿佛[^。！？]{1,15}[般一样]"),
+    ("仿佛…一般", r"仿佛[^。！？]{0,15}(?:一般|般)"),
     ("空气凝固/凝重", r"空气[^。！？]{0,8}(?:凝固|凝重|仿佛凝固)"),
     ("嘴角勾起/上扬", r"嘴角[^。！？]{0,6}(?:勾起|上扬|勾起一抹)"),
     ("眼底闪过", r"眼底[^。！？]{0,4}闪过"),
@@ -84,8 +84,12 @@ def words(book: Path) -> dict:
     for tok, _, text in final_chapters(book):
         chapters.append({"chapter": tok, "cjk": common.cjk_count(text),
                          "sentences": len(_sentences(text))})
+    cjks = [c["cjk"] for c in chapters]
+    spread = (max(cjks) - min(cjks)) if cjks else 0
+    mean = (sum(cjks) / len(cjks)) if cjks else 0.0
+    stdev = round(math.sqrt(sum((x - mean) ** 2 for x in cjks) / len(cjks)), 1) if len(cjks) > 1 else 0.0
     return {"kind": "words", "chapter_count": len(chapters),
-            "total_cjk": sum(c["cjk"] for c in chapters), "chapters": chapters}
+            "total_cjk": sum(cjks), "cjk_spread": spread, "cjk_stdev": stdev, "chapters": chapters}
 
 
 def mentions(book: Path, target: str | None = None) -> dict:
@@ -199,7 +203,7 @@ def style(book: Path, ch: str | None = None) -> dict:
         var = sum((x - mean) ** 2 for x in lens) / len(lens)
         total_chars = sum(lens) or 1
         paras = _paragraphs(text)
-        heads = [p[:2] for p in paras]
+        heads = [re.sub(r"^[^\u4e00-\u9fffA-Za-z0-9]+", "", p)[:2] for p in paras]  # 剥引号/标点起头再取两字
         dup_head = len(heads) - len(set(heads))
         lines = [ln for ln in text.splitlines() if ln.strip()]
         dialogue_lines = sum(1 for ln in lines if QUOTE_LINE_RE.match(ln))

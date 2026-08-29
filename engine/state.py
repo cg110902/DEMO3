@@ -86,7 +86,9 @@ failed/ = 失败提案，就地处修复后重跑 `sync`，引擎自动捡回。
   "operation_id": "ch_007.syncer.0829a",
   "current": {"location": "青石镇·祠堂", "present_characters": ["沈拓", "村长"]},
   "entities": [{"action": "upsert", "name": "村长", "type": "person",
-               "summary": "青石镇村长，玉佩旧案的知情人"}],
+               "summary": "青石镇村长，玉佩旧案的知情人", "aliases": ["老丈"]},
+              {"action": "upsert", "name": "祠堂", "type": "place",
+               "summary": "册墙藏十年公册。现状：钥匙轮值周——'现状'写进 summary；status 是枚举"}],
   "lines": [
     {"kind": "foreshadow", "action": "plant", "name": "祠堂牌位下的匣子", "target_ch": 12},
     {"kind": "foreshadow", "action": "resolve", "id": "GUN-003"}
@@ -99,6 +101,7 @@ failed/ = 失败提案，就地处修复后重跑 `sync`，引擎自动捡回。
 ```
 
 写提案的纪律：只写增量；事实必须能在本章 final 正文找到出处；不确定就不上账。
+status 只许 active/retired（越界整案回滚进 failed/）；"现状/近况"一律并入 summary——upsert 即覆盖，逐章刷新。
 """
 
 

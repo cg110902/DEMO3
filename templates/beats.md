@@ -3,7 +3,7 @@ chapter: ch_XXX            # 引擎解析用，必须 ch_NNN
 vol: vol_01
 form:                      # 章型（craft#反公式化与拟人化 章型库；与上章同 form 须补 form_reason）
 pov:                       # 视角人物·距离
-words: 2200-4500           # 目标带（仅参照）
+words: 2200-4500           # 目标带（仅参照）——与相邻章的带错开（craft 方差条）
 style_notes:               # 句长倾向 | 章首手段 | 章尾方式（三旋钮，竖线分隔）
 # form_reason:             # 仅当与上一章 form 相同
 ---

@@ -17,7 +17,7 @@ def build_book(tmp_path):
     (book / "manuscript" / "vol_01" / "final").mkdir(parents=True, exist_ok=True)
     texts = {
         "ch_001": "# 第一章 渊口\n\n沈拓夜里巡渊。黑玉佩在掌心发烫。\n\n「站住！」他喝道。\n\n沈拓夜里巡渊。黑玉佩在掌心发烫。\n",
-        "ch_002": "# 第二章 当铺\n\n当铺赵四眯着眼。仿佛雾里看花一般。\n\n沈拓不是来赎刀的，而是来卖命的。\n",
+        "ch_002": "# 第二章 当铺\n\n当铺赵四眯着眼。仿佛雾里看花一般。仿佛那一寸是不小心的。\n\n沈拓不是来赎刀的，而是来卖命的。\n",
         "ch_003": "# 第三章 雨夜\n\n村长站在檐下。雨声盖过更鼓。\n",
     }
     for tok, txt in texts.items():
@@ -43,13 +43,15 @@ def build_book(tmp_path):
 
 def test_words_contract_and_counts(tmp_path):
     ev = evidence.words(build_book(tmp_path))
-    assert set(ev) == {"kind", "chapter_count", "total_cjk", "chapters"}
+    assert set(ev) == {"kind", "chapter_count", "total_cjk", "cjk_spread", "cjk_stdev", "chapters"}
     assert ev["kind"] == "words" and ev["chapter_count"] == 3
     ch1 = ev["chapters"][0]
     assert set(ch1) == {"chapter", "cjk", "sentences"}
     # ch_001 正文 CJK 手算：6+8+2+3+6+8=33
     assert ch1["cjk"] == 33
     assert ev["total_cjk"] == sum(c["cjk"] for c in ev["chapters"])
+    cjks = [c["cjk"] for c in ev["chapters"]]
+    assert ev["cjk_spread"] == max(cjks) - min(cjks)
 
 
 def test_mentions(tmp_path):
@@ -105,6 +107,25 @@ def test_style_metrics(tmp_path):
     assert dist["forms"] == {"单场景章": 1, "对话驱动章": 1, "静水流日常章": 1}
     assert all(abs(sum(dist["shares"].values()) - 1.0) < 0.01 for _ in [0])
     assert dist["count"] == 3 and dist["missing_form"] == []
+
+
+def test_ai_construction_false_positive(tmp_path):
+    # "仿佛那一寸"（无 般/一般）不得命中；同段真句式照常命中（卷一 ch_001 误报回归）
+    ev = evidence.style(build_book(tmp_path), "ch_002")
+    assert ev["chapters"][0]["ai_constructions"]["仿佛…一般"] == 1
+
+
+def test_para_head_quote_exempt(tmp_path):
+    book = tmp_path / "b"
+    (book / "manuscript/vol_01/final").mkdir(parents=True)
+    text = "\n\n".join([
+        "\u201c你倒是寻得来。\u201d他站着。",
+        "\u201c你自己呢？\u201d他挑灯。",
+        "他说好。", "他说行。",
+    ])
+    (book / "manuscript/vol_01/final/ch_001.md").write_text("# 第一章\n\n" + text, encoding="utf-8")
+    ev = evidence.style(book, "ch_001")
+    assert ev["chapters"][0]["para_head_repeat"] == 1  # 剥引号后对话段首不同；叙述"他说×2"仍计
 
 
 def test_evidence_is_json_serializable(tmp_path):

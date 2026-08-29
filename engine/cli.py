@@ -356,7 +356,12 @@ def cmd_sync(args) -> int:
             print(f"❌ 未找到 {ch} 的任何稿件（raw/final），拒绝空同步")
             return 1
         if not has_proposal:
-            print(f"❌ 未找到 {ch} 的正式状态提案（inbox 与 failed/ 均无），拒绝空同步")
+            hint = ""
+            strays = [p.name for p in inbox.glob(f"{ch}.*") if p.suffix == ".json"] if inbox.is_dir() else []
+            if strays:
+                hint = (f"（发现同章非规范命名：{'、'.join(sorted(strays))}——在途提案每章仅一份，"
+                        f"文件名须为 {ch}.json；已封存章的修订并入下一章提案随 sync 合并）")
+            print(f"❌ 未找到 {ch} 的正式状态提案（inbox 与 failed/ 均无），拒绝空同步{hint}")
             return 1
 
     overall = state.apply_inbox(book, expect_chapter=ch, dry_run=args.dry_run)
