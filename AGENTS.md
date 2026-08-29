@@ -39,7 +39,7 @@
 | 0 初始化 | genre_guide 选材 + templates 引导 | 填 bible/、characters/、main_plot、project.json | `init` → `check` |
 | 1 细纲+任务书 | main_plot、卷纲、status、evidence gaps | `outlines/vol_XX/beats/ch_XXX.md`（front-matter+拍点+任务书） | `evidence words/gaps` |
 | 2 起草 | （子代理）任务书+pack | `manuscript/vol_XX/raw/ch_XXX_vN.md` | spawn drafter；pack |
-| 3 审校重铸 | （子代理）任务书+raw+pack | `final/ch_XXX.md` + `log/review/ch_XXX.md` | spawn guard；子代理自跑 evidence |
+| 3 打磨与校对 | （子代理）任务书(含打磨重点)+raw+pack | `final/ch_XXX.md` + `log/review/ch_XXX.md` | spawn guard；子代理自跑 evidence |
 | 4 同步 | 本章全部产物 | `state/inbox/ch_XXX.json` | `sync ch_XXX --dry-run` → `sync ch_XXX` |
 | 任意时刻 | — | — | `check` / `snapshot list` / `status` |
 
