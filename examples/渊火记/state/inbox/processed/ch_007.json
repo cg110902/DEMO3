@@ -1,0 +1,71 @@
+{
+ "schema": "novel-studio.state-mutation/v2",
+ "chapter": "ch_007",
+ "operation_id": "ch_007.syncer.0829_1357",
+ "current": {
+  "time": "启元十年十一月初十二夜起至十三夜（册房两夜）",
+  "location": "盐行后柜册房",
+  "present_characters": [
+   "沈拓"
+  ],
+  "equipment": "小本（末页添三道杠）；灶房钥匙（仍挂腰上）",
+  "situation": "受雇盐行帮账；册房三规已领；'平'册封绳为禁手；'誊'字批号与借册环印比对成立、人未落名；渊火异象持续"
+ },
+ "entities": [
+  {
+   "action": "upsert",
+   "name": "陆九",
+   "type": "person",
+   "summary": "盐行外柜管钥人，自报名；旧斗篷、袖口账浆、腰间环扣挂半枚牌——沈拓只觉眼熟，未对证",
+   "aliases": [
+    "管钥的",
+    "陆先生"
+   ]
+  },
+  {
+   "action": "upsert",
+   "name": "盐行后柜册房",
+   "type": "place",
+   "summary": "外账按旬排矮架，高处封架存要册，'平'册封绳压盐道朱印；清册旬不留人过夜",
+   "aliases": [
+    "册房",
+    "外字柒"
+   ]
+  }
+ ],
+ "lines": [
+  {
+   "kind": "foreshadow",
+   "action": "update",
+   "id": "GUN-002",
+   "target_ch": 12,
+   "plan": "ch_007 得实证：外账册缝'誊'字批号捺脚与灰痕同手；'誊册人'范围缩至盐行册务相关人等，仍未落名"
+  },
+  {
+   "kind": "foreshadow",
+   "action": "plant",
+   "name": "外字捌缺册与无名'借'签",
+   "target_ch": 9,
+   "plan": "ch_008 追'借'签：借册例外行环印缺半边，与塌口铜牌同源待证"
+  }
+ ],
+ "ledger": {
+  "transactions": []
+ },
+ "timeline": {
+  "events": [
+   {
+    "time": "十一月初十二夜",
+    "event": "领铜牌木签入册房；夜半陆九收签自报"
+   },
+   {
+    "time": "十三夜",
+    "event": "册缝见'誊'字批号；发现外字捌空缺挂'借'签"
+   }
+  ]
+ },
+ "synopsis": {
+  "title": "外账",
+  "text": "沈拓受雇盐行后柜帮账，夜点半枚铜牌与管钥人陆九相识于签案之间；次日册缝里一枚淡墨'誊'字批号，捺脚与灰痕同手——回身再查，架上少一册外字捌，只余'借'字纸签，借册那行无名的环印，缺着半边纹。"
+ }
+}

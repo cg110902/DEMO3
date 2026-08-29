@@ -1,0 +1,13 @@
+{
+  "files": {
+    ".applied_operations.json": "8ee3ec5abd3b044d19a6038375516a8f58657edc6bfcae2fc8cee360a7c01350",
+    "current.json": "ddd3f7fb89af3283895ce9eee32e59f1a63e969ffdb64ca5026936000857bd9c",
+    "entities.json": "4843aedb66a18e7a624547f6cd7b5cc29751954a559d5869143c34129e4b8ab9",
+    "ledger.json": "323339918a8729bfb72e2607f834158c12822e38be92b887c546998a2138de50",
+    "lines.json": "90a05003180c1f565549e3f3a908658d55bdf8dffbfef3c575be7c5edc14a7c9",
+    "synopsis.json": "fa68b9103cb9d5ce1aac05a9955d2a981f79226aacd2ae5e2652bc8ae8ba991a",
+    "timeline.json": "326e4b8e9d154202ba4b29801f4b1de7e3d8b498dc2698da318b3ba3c748bba7"
+  },
+  "hash": "6c8b00fbae642148cad0dfbc910a86f615774f1f56375aebbafcd2f148fe4f59",
+  "version": 1
+}
