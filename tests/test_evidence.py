@@ -128,6 +128,31 @@ def test_para_head_quote_exempt(tmp_path):
     assert ev["chapters"][0]["para_head_repeat"] == 1  # 剥引号后对话段首不同；叙述"他说×2"仍计
 
 
+def test_guard_extra_scoped_counting(tmp_path):
+    # 章级禁忌结构化：beats guard_extra → style 与 file 都按本章词表计数
+    from pathlib import Path
+
+    from engine import common as _c
+    book = Path(tmp_path) / "g"
+    (book / "manuscript/vol_01/final").mkdir(parents=True)
+    (book / "outlines/vol_01/beats").mkdir(parents=True)
+    _c.dump_json(book / "project.json", {"schema": "novel-studio.project/v1",
+        "title": "尺", "genre": "都市", "mode": "automatic",
+        "words_target": [10, 4000], "style_guards": []})
+    (book / "manuscript/vol_01/final/ch_001.md").write_text(
+        "# 第一章\n\n他数了一遍。灯花没爆。他数了两遍。\n", encoding="utf-8")
+    (book / "outlines/vol_01/beats/ch_001.md").write_text(
+        "---\nform: 单场景章\nguard_extra: 数|灯花\n---\n拍点。\n", encoding="utf-8")
+    c = evidence.style(book, "ch_001")["chapters"][0]
+    assert c["guard_extra_scoped"] == ["数", "灯花"]
+    assert c["style_guards_hits"]["数"] == 2 and c["style_guards_hits"]["灯花"] == 1
+    f = evidence.file_stats(book, "manuscript/vol_01/final/ch_001.md", "ch_001")
+    assert f["style_guards_hits"]["数"] == 2 and "guard_extra_scoped" in f
+    # 不带章节号 → 只有全局尺（章级词表不越权）
+    g = evidence.file_stats(book, "manuscript/vol_01/final/ch_001.md")
+    assert "guard_extra_scoped" not in g and g["style_guards_hits"] == {}
+
+
 def test_evidence_is_json_serializable(tmp_path):
     book = build_book(tmp_path)
     for payload in (evidence.words(book), evidence.gaps(book), evidence.style(book),

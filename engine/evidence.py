@@ -213,15 +213,34 @@ def _stats_one(text: str, guard_words: list) -> dict:
             "ai_constructions": cons, "style_guards_hits": guards}
 
 
-def file_stats(book: Path, rel: str) -> dict:
-    """工作区内任意稿件的单篇实测（起草/改稿场景：数 raw，不装进定稿口径）。"""
+def file_stats(book: Path, rel: str, ch: str | None = None) -> dict:
+    """工作区内任意稿件的单篇实测（起草/改稿场景：数 raw，不装进定稿口径）。
+    可选章节号 → 并入该章 beats 的 guard_extra（起草现场用本章禁忌同一把尺）。"""
     base = book.resolve()
     path = (book / rel).resolve()
     if base not in path.parents or not path.is_file():
         return {"error": f"工作区内找不到文件: {rel}"}
     proj = common.load_json(book / "project.json", default={}) or {}
+    guards = list(proj.get("style_guards", []) or [])
+    out: dict = {"kind": "file", "path": rel}
+    if ch is not None:
+        num = common.chapter_token_to_num(ch)
+        extra = [w for w in _beats_guard_extra(book, num) if w and w not in guards]
+        guards += extra
+        if extra:
+            out["guard_extra_scoped"] = extra
     text = path.read_text(encoding="utf-8", errors="replace")
-    return {"kind": "file", "path": rel, **_stats_one(text, proj.get("style_guards", []) or [])}
+    return {**out, **_stats_one(text, guards)}
+
+
+def _beats_guard_extra(book: Path, num: int) -> list[str]:
+    """本章 beats front-matter 的 guard_extra（竖线分隔）——章级禁忌的引擎可数化。"""
+    for f in common.find_chapter_files(book, "beats"):
+        if common.chapter_number_from_name(f.name) == num:
+            fm = common.parse_front_matter(f.read_text(encoding="utf-8", errors="replace"))
+            raw = fm.get("guard_extra", "")
+            return [w.strip() for w in re.split(r"[|｜，,]", raw) if w.strip()]
+    return []
 
 
 def style(book: Path, ch: str | None = None) -> dict:
@@ -230,7 +249,12 @@ def style(book: Path, ch: str | None = None) -> dict:
         if ch is not None and num != common.chapter_token_to_num(ch):
             continue
         proj = common.load_json(book / "project.json", default={}) or {}
-        chapters.append({"chapter": tok, **_stats_one(text, proj.get("style_guards", []) or [])})
+        guard_words = list(proj.get("style_guards", []) or [])
+        extra = [w for w in _beats_guard_extra(book, num) if w not in guard_words]
+        stats = _stats_one(text, guard_words + extra)
+        if extra:
+            stats["guard_extra_scoped"] = extra
+        chapters.append({"chapter": tok, **stats})
     forms = form_distribution(book)
     return {"kind": "style", "chapters": chapters, "form_distribution": forms}
 

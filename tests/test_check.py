@@ -3,6 +3,7 @@
 errors 只允许事实级（schema/算术/结构）；本文件同时冻结 check 的 JSON 顶层契约 key。
 """
 import json
+import pathlib
 from pathlib import Path
 
 from engine import checks, cli, common, state
@@ -113,5 +114,53 @@ def test_beats_fm_extra_keys_rejected(tmp_path):
     b.write_text("---\nchapter: ch_001\nvol: vol_01\nform: 单场景章\npov: 甲\n"
                  "words: 20-40\nstyle_notes: 贴耳\nform_reason: 剧情需要\n---\n\n拍点。\n",
                  encoding="utf-8")
+    assert [e for e in checks.run_checks(book)["errors"]
+            if e["code"] == "beats_fm_extra_keys"] == []
+
+
+# ---------------- P1 review_gate：验收覆盖机械核对 ----------------
+
+def _gate_book(tmp_path, *, k_accept=3, review=None):
+    book = pathlib.Path(tmp_path) / "g"
+    common.dump_json(book / "project.json", {"schema": "novel-studio.project/v1",
+        "title": "闸", "genre": "都市", "mode": "automatic",
+        "words_target": [10, 4000], "style_guards": []})
+    (book / "outlines/vol_01/beats").mkdir(parents=True, exist_ok=True)
+    acc = "\n".join(f"{i}. 条目{i}。" for i in range(1, k_accept + 1))
+    (book / "outlines/vol_01/beats/ch_001.md").write_text(
+        f"---\nform: 单场景章\n---\n## 验收\n{acc}\n", encoding="utf-8")
+    if review is not None:
+        (book / "log/review").mkdir(parents=True, exist_ok=True)
+        (book / "log/review/ch_001.md").write_text(review, encoding="utf-8")
+    return book
+
+
+def test_review_gate_rules(tmp_path):
+    # 无「验收」节 → 放行
+    b = _gate_book(tmp_path, k_accept=0)
+    assert checks.review_gate(b, "ch_001") == []
+    # 注记不存在 → 放行（代笔例外，不新增闸门）
+    b = _gate_book(tmp_path)
+    assert checks.review_gate(b, "ch_001") == []
+    # 缺答 + 无判定符 + ✓短证据 → 三条全报
+    b = _gate_book(tmp_path, review="## 验收打钩\n\n1. 条目一：✓——正文有\n2. 条目二：写过了但没有勾\n")
+    issues = checks.review_gate(b, "ch_001")
+    assert len(issues) == 3
+    assert any("[3]" in i for i in issues) and any("判定符" in i for i in issues) \
+        and any("证据线过短" in i for i in issues)
+    # 全部合规 → 零问题
+    ok = ("## 验收打钩\n\n"
+          "1. 条目一：✓——「甲推门。」正文首段，位置明确可复查\n"
+          "2. 条目二：✗ 拒收级——正文无此动作，仅计划\n"
+          "3. 条目三：✓——evidence words cjk=1858 落带内，见 style 输出\n")
+    b = _gate_book(tmp_path, review=ok)
+    assert checks.review_gate(b, "ch_001") == []
+
+
+def test_beats_guard_extra_key_allowed(tmp_path):
+    # P2：guard_extra 是合法键（超出七键白名单扩展后的八键），不得误拦
+    book = _mkbook(tmp_path, healthy=True)
+    b = book / "outlines/vol_01/beats/ch_001.md"
+    b.write_text("---\nform: 单场景章\nguard_extra: 数|灯花\n---\n\n拍点。\n", encoding="utf-8")
     assert [e for e in checks.run_checks(book)["errors"]
             if e["code"] == "beats_fm_extra_keys"] == []

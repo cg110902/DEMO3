@@ -232,9 +232,35 @@ def cmd_status(args) -> int:
     print("    下一步：")
     for a in brief["next_actions"]:
         print(f"      👉 {a}")
+    _status_debts(book)
     print("    规则：先读 AGENTS.md 地图，再按 workflow 对应 Stage 节行动。")
     print("=" * 70)
     return 0
+
+
+def _status_debts(book) -> None:
+    """账上提醒（纯数出来的事实）：快到期/已逾期的线 + failed/ 积压。"""
+    notes: list[str] = []
+    n_fail = len(list((book / "state" / "inbox" / "failed").glob("*.json"))) \
+        if (book / "state" / "inbox" / "failed").is_dir() else 0
+    if n_fail:
+        notes.append(f"🧾 inbox/failed/ 积压 {n_fail} 件——就地修复后 sync 自动捡回")
+    try:
+        g = evidence.gaps(book)
+        cur = g.get("max_final_chapter") or 0
+        soon = [x for x in g["foreshadows"] + g["misunderstandings"]
+                if isinstance(x.get("target_ch"), int) and x.get("status") not in ("Resolved",)
+                and 0 <= x["target_ch"] - cur <= 2]
+        for x in soon[:2]:
+            nid = x.get("id", "?")
+            left = x["target_ch"] - cur
+            notes.append(f"⏳ {nid} 距到期 {left} 章（target ch_{x['target_ch']:03d}）")
+        if len(soon) > 2:
+            notes.append(f"   （另有 {len(soon) - 2} 条同量级，见 evidence gaps）")
+    except Exception:  # noqa: BLE001 —— 提醒行永不压垮 status
+        pass
+    for n in notes:
+        print(f"      {n}")
 
 
 # ---------------------------------------------------------------------------
@@ -289,10 +315,10 @@ def cmd_evidence(args) -> int:
                    "form": evidence.form_distribution(book), "dup": evidence.dup(book),
                    "gaps": evidence.gaps(book)}
     elif kind == "file":
-        if len(rest) != 1:
-            print("❌ evidence file 需要恰好一个工作区内相对路径")
+        if len(rest) not in (1, 2):
+            print("❌ evidence file 需要 <相对路径> [章节号(并入该章 guard_extra)]")
             return 2
-        payload = evidence.file_stats(book, rest[0])
+        payload = evidence.file_stats(book, rest[0], rest[1] if len(rest) == 2 else None)
         if payload.get("error"):
             print(f"❌ {payload['error']}")
             return 1
@@ -379,6 +405,13 @@ def cmd_sync(args) -> int:
                         f"文件名须为 {ch}.json；已封存章的修订并入下一章提案随 sync 合并）")
             print(f"❌ 未找到 {ch} 的正式状态提案（inbox 与 failed/ 均无），拒绝空同步{hint}")
             return 1
+
+    gate = checks.review_gate(book, ch)
+    if gate:
+        for g in gate:
+            print(f"❌ 审校合同未达：{g}")
+        print("   （Stage 3 注记「## 验收」节须逐条 N. ✓/✗+证据；拒合并拒封存，改完注记再 sync）")
+        return 1
 
     overall = state.apply_inbox(book, expect_chapter=ch, dry_run=args.dry_run)
     verify_errors: list[str] = []
@@ -611,6 +644,7 @@ def _build_parser() -> argparse.ArgumentParser:
     q = sub.add_parser("evidence", help="机械证据：all|mentions|gaps|dup|style|words|file")
     _add_common_opts(q)
     q.add_argument("kind", choices=["all", "mentions", "gaps", "dup", "style", "words", "file"])
+    q.set_defaults(func=cmd_evidence)  # file 接受第二参（章节号）
     q.add_argument("args", nargs="*", help="kind 参数（名字/章节等）")
     q.set_defaults(func=cmd_evidence)
 

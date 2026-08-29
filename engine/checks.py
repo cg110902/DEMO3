@@ -22,7 +22,63 @@ def _err(code: str, msg: str) -> dict:
     return {"code": code, "msg": msg}
 
 
-_BEATS_FM_KEYS = {"chapter", "vol", "form", "pov", "words", "style_notes", "form_reason"}
+_BEATS_FM_KEYS = {"chapter", "vol", "form", "pov", "words", "style_notes", "form_reason",
+                  "guard_extra"}
+
+
+def _numbered_items(lines: list[str]) -> dict[int, str]:
+    """`N.`/`N、`起头的行 → {序号: 整行}（跳空行，只认节内）。"""
+    out: dict[int, str] = {}
+    for ln in lines:
+        m = re.match(r"^(\d+)[.、]\s*(.*)$", ln.strip())
+        if m:
+            out[int(m.group(1))] = ln.strip()
+    return out
+
+
+def _section(md_text: str, title_pat: str) -> list[str]:
+    """取 "## <title>" 小节正文（到下一个 ## 或文件尾）。"""
+    lines, inside = [], False
+    for ln in md_text.splitlines():
+        if re.match(r"^##\s", ln):
+            if inside:
+                break
+            inside = bool(re.match(title_pat, ln))
+            continue
+        if inside:
+            lines.append(ln)
+    return lines
+
+
+def review_gate(book: Path, ch: str) -> list[str]:
+    """Stage 3/4 合同（机械层）：审校注记「验收打钩」节必须逐条答完任务书「验收」。
+
+    只数行与符号：beats 无「验收」节 → 不拦（无清单可对照）；注记不存在 → 不拦
+    （主控代笔例外，status 流水线另有信号）；注记存在 → 缺答/缺✓✗/✓而短于证据线 = 拒绝封存。
+    """
+    beats = [f for f in common.find_chapter_files(book, "beats")
+             if common.chapter_number_from_name(f.name) == common.chapter_token_to_num(ch)]
+    k = 0
+    if beats:
+        acc = _section(beats[0].read_text(encoding="utf-8", errors="replace"), r"^##\s*验收")
+        k = max(_numbered_items(acc), default=0)
+    if k == 0:
+        return []
+    rev = book / "log" / "review" / f"{ch}.md"
+    if not rev.is_file():
+        return []
+    items = _numbered_items(_section(rev.read_text(encoding="utf-8", errors="replace"),
+                                     r"^##\s*验收"))
+    issues: list[str] = []
+    missing = [n for n in range(1, k + 1) if n not in items]
+    if missing:
+        issues.append(f"验收 {missing} 未被审校注记回答（共 {k} 条，须逐条 N. ✓/✗+证据）")
+    for n, line in sorted(items.items()):
+        if not re.search(r"[✓✗×√]", line):
+            issues.append(f"验收 {n} 无 ✓/✗ 判定符")
+        elif "✓" in line and len(line) < 24:
+            issues.append(f"验收 {n} 打了✓但证据线过短（无证据的打钩 = 未审）")
+    return issues
 
 
 def run_checks(book: Path) -> dict:
