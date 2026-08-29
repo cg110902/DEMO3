@@ -115,7 +115,8 @@ raw 不可救 → 写 `log/review/ch_XXX.reject.md`（理由+缺什么语境）�
 
 - 输入合同：本章 beats/raw/final/review 齐 + 主控对状态 diff 的整理。
 - 动作：
-  1. 按 `state/inbox/README.md` 的样例组装提案 → `state/inbox/ch_XXX.json`
+  1. `python studio.py proposal new ch_XXX` 打印骨架（schema/chapter/operation_id 已预填，
+     不落盘），按 `state/inbox/README.md` 的样例纪律填实六区 → 存 `state/inbox/ch_XXX.json`
      （schema: `engine/schemas/proposal.schema.json`；operation_id = `<ch>.<作者>.<序号>`）；
   2. `python studio.py sync ch_XXX --dry-run` 预演（校验结构+列出合并计划）；
   3. 去 dry-run 正式 `sync`：引擎合并 → 体检 → 快照 `<ch>_done` 一气呵成；

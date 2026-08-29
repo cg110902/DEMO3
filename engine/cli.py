@@ -9,6 +9,7 @@ import argparse
 import datetime
 import json
 import re
+import sys
 from pathlib import Path
 
 from . import __version__, checks, common, evidence, snapshot, state
@@ -280,7 +281,22 @@ def cmd_evidence(args) -> int:
         print("❌ 未找到书工作区或其 project.json（先运行 init）")
         return 1
     kind, rest = args.kind, list(args.args or [])
-    if kind in ("gaps", "words"):
+    if kind == "all":
+        if rest:
+            print("❌ evidence all 不接受参数（聚合全书五件套）")
+            return 2
+        payload = {"kind": "all", "words": evidence.words(book), "style": evidence.style(book),
+                   "form": evidence.form_distribution(book), "dup": evidence.dup(book),
+                   "gaps": evidence.gaps(book)}
+    elif kind == "file":
+        if len(rest) != 1:
+            print("❌ evidence file 需要恰好一个工作区内相对路径")
+            return 2
+        payload = evidence.file_stats(book, rest[0])
+        if payload.get("error"):
+            print(f"❌ {payload['error']}")
+            return 1
+    elif kind in ("gaps", "words"):
         if rest:
             print(f"❌ evidence {kind} 不接受参数，收到: {rest}")
             return 2
@@ -411,6 +427,43 @@ def cmd_sync(args) -> int:
 
 
 # ---------------------------------------------------------------------------
+# proposal：new——骨架生成（结构预填，内容留白；引擎不判断该不该上账）
+# ---------------------------------------------------------------------------
+def cmd_proposal(args) -> int:
+    book = common.resolve_workspace(args.workspace)
+    if book is None or not (book / "project.json").exists():
+        print("❌ 未找到书工作区或其 project.json（先运行 init）")
+        return 1
+    if getattr(args, "pp_action", None) not in (None, "new"):
+        print("❌ proposal 只有 new 动作")
+        return 2
+    n = common.chapter_token_to_num(args.chapter)
+    if n is None:
+        print(f"❌ 无法解析章节号: {args.chapter}")
+        return 2
+    ch = f"ch_{n:03d}"
+    inbox = book / "state" / "inbox"
+    if (inbox / f"{ch}.json").exists():
+        print(f"❌ {ch} 已有在途提案（state/inbox/{ch}.json）——先处理再建新骨架")
+        return 1
+    from datetime import datetime
+    mmdd = datetime.now().strftime("%m%d_%H%M")
+    skeleton = {
+        "schema": "novel-studio.state-mutation/v2", "chapter": ch,
+        "operation_id": f"{ch}.syncer.{mmdd}",
+        "current": {"time": "", "location": "", "present_characters": []},
+        "entities": [], "lines": [],
+        "ledger": {"transactions": []}, "timeline": {"events": []},
+        "synopsis": {"title": "", "text": ""},
+    }
+    print(json.dumps(skeleton, ensure_ascii=False, indent=1))
+    print(f"🧩 骨架已打印（不落盘）：填六区后存为 state/inbox/{ch}.json；"
+          f"纪律与键形状见 {inbox / 'README.md'}；只写增量、事实须能在 {ch} final 找到出处",
+          file=sys.stderr)
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # snapshot：list / create / rollback（--clean-drafts 清理超前稿件）
 # ---------------------------------------------------------------------------
 def cmd_snapshot(args) -> int:
@@ -500,11 +553,12 @@ COMMAND_HELP = {
     "status": "进度总览 + 逐章流水线 + 下一步指向",
     "init": "创建/清理书工作区（脚手架+状态播种+模板槽位实例化）",
     "pack": "单章上下文三层装配（P0 热 / P1 别名触发 / P2 冷索引，自报 budget）",
-    "evidence": "机械证据：mentions|gaps|dup|style|words（纯 JSON，零裁决）",
+    "evidence": "机械证据：all|mentions|gaps|dup|style|words|file（纯 JSON，零裁决）",
     "check": "结构/schema/算术体检（errors 只允许事实级；有 errors 退出码 1）",
     "sync": "提案合并 → 状态体检 → 快照（Stage 4 闭环，可 --dry-run）",
     "snapshot": "快照 list / create NAME / rollback NAME [--clean-drafts]",
     "export": "全书编译：--txt 拼接正文，--views 渲染状态视图",
+    "proposal": "提案骨架生成：new <章节> → stdout 打印预填 JSON（不落盘，填空后存 inbox）",
     "help": "本命令目录（--json 供宿主解析）",
 }
 
@@ -554,9 +608,9 @@ def _build_parser() -> argparse.ArgumentParser:
     q.add_argument("--open", dest="open_path", help="取工作区内任一文件原文（相对路径）")
     q.set_defaults(func=cmd_pack)
 
-    q = sub.add_parser("evidence", help="机械证据：mentions|gaps|dup|style|words")
+    q = sub.add_parser("evidence", help="机械证据：all|mentions|gaps|dup|style|words|file")
     _add_common_opts(q)
-    q.add_argument("kind", choices=["mentions", "gaps", "dup", "style", "words"])
+    q.add_argument("kind", choices=["all", "mentions", "gaps", "dup", "style", "words", "file"])
     q.add_argument("args", nargs="*", help="kind 参数（名字/章节等）")
     q.set_defaults(func=cmd_evidence)
 
@@ -595,6 +649,16 @@ def _build_parser() -> argparse.ArgumentParser:
     q.add_argument("--txt", action="store_true", help="导出 export/<书名>.txt")
     q.add_argument("--views", action="store_true", help="导出 export/views/state_view.md")
     q.set_defaults(func=cmd_export)
+
+    q = sub.add_parser("proposal", help="提案骨架：new <章节>（打印预填 JSON，不落盘）")
+    _add_common_opts(q)
+    pp = q.add_subparsers(dest="pp_action")
+    r = pp.add_parser("new", help="生成最小合法骨架（schema/chapter/operation_id 预填）")
+    r.add_argument("chapter")
+    r.add_argument("-w", "--workspace")
+    r.add_argument("--json", action="store_true")
+    r.set_defaults(func=cmd_proposal)
+    q.set_defaults(func=cmd_proposal)
 
     q = sub.add_parser("help", help="命令目录")
     q.add_argument("--json", action="store_true")

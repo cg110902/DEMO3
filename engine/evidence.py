@@ -192,34 +192,45 @@ def dup(book: Path, ch: str | None = None) -> dict:
             "within": within, "adjacent_pairs": pairs}
 
 
+def _stats_one(text: str, guard_words: list) -> dict:
+    """单篇文本的全套计数——定稿扫描与草稿实测（file_stats）共用同一把尺。"""
+    sents = _sentences(text)
+    lens = [len(re.sub(r"\s+", "", s)) for s in sents] or [0]
+    mean = sum(lens) / len(lens)
+    var = sum((x - mean) ** 2 for x in lens) / len(lens)
+    total_chars = sum(lens) or 1
+    paras = _paragraphs(text)
+    heads = [re.sub(r"^[^\u4e00-\u9fffA-Za-z0-9]+", "", p)[:2] for p in paras]  # 剥引号/标点起头再取两字
+    lines = [ln for ln in text.splitlines() if ln.strip()]
+    dialogue_lines = sum(1 for ln in lines if QUOTE_LINE_RE.match(ln))
+    cons = {name: len(re.findall(pat, text)) for name, pat in AI_CONSTRUCTIONS}
+    guards = {g: text.count(g) for g in guard_words if isinstance(g, str) and g}
+    return {"cjk": common.cjk_count(text), "sentences": len(lens),
+            "len_mean": round(mean, 1), "len_stdev": round(math.sqrt(var), 1),
+            "max_share": round(max(lens) / total_chars, 3),
+            "dialogue_line_ratio": round(dialogue_lines / max(1, len(lines)), 3),
+            "para_head_repeat": len(heads) - len(set(heads)), "para_count": len(paras),
+            "ai_constructions": cons, "style_guards_hits": guards}
+
+
+def file_stats(book: Path, rel: str) -> dict:
+    """工作区内任意稿件的单篇实测（起草/改稿场景：数 raw，不装进定稿口径）。"""
+    base = book.resolve()
+    path = (book / rel).resolve()
+    if base not in path.parents or not path.is_file():
+        return {"error": f"工作区内找不到文件: {rel}"}
+    proj = common.load_json(book / "project.json", default={}) or {}
+    text = path.read_text(encoding="utf-8", errors="replace")
+    return {"kind": "file", "path": rel, **_stats_one(text, proj.get("style_guards", []) or [])}
+
+
 def style(book: Path, ch: str | None = None) -> dict:
     chapters = []
     for tok, num, text in final_chapters(book):
         if ch is not None and num != common.chapter_token_to_num(ch):
             continue
-        sents = _sentences(text)
-        lens = [len(re.sub(r"\s+", "", s)) for s in sents] or [0]
-        mean = sum(lens) / len(lens)
-        var = sum((x - mean) ** 2 for x in lens) / len(lens)
-        total_chars = sum(lens) or 1
-        paras = _paragraphs(text)
-        heads = [re.sub(r"^[^\u4e00-\u9fffA-Za-z0-9]+", "", p)[:2] for p in paras]  # 剥引号/标点起头再取两字
-        dup_head = len(heads) - len(set(heads))
-        lines = [ln for ln in text.splitlines() if ln.strip()]
-        dialogue_lines = sum(1 for ln in lines if QUOTE_LINE_RE.match(ln))
-        cons = {name: len(re.findall(pat, text)) for name, pat in AI_CONSTRUCTIONS}
-        # 计数直用字符串 count，regex 仅用于固定句式清单
-        guards = {}
         proj = common.load_json(book / "project.json", default={}) or {}
-        for g in proj.get("style_guards", []) or []:
-            if isinstance(g, str) and g:
-                guards[g] = text.count(g)
-        chapters.append({"chapter": tok, "sentences": len(lens),
-                         "len_mean": round(mean, 1), "len_stdev": round(math.sqrt(var), 1),
-                         "max_share": round(max(lens) / total_chars, 3),
-                         "dialogue_line_ratio": round(dialogue_lines / max(1, len(lines)), 3),
-                         "para_head_repeat": dup_head, "para_count": len(paras),
-                         "ai_constructions": cons, "style_guards_hits": guards})
+        chapters.append({"chapter": tok, **_stats_one(text, proj.get("style_guards", []) or [])})
     forms = form_distribution(book)
     return {"kind": "style", "chapters": chapters, "form_distribution": forms}
 

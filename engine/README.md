@@ -6,12 +6,12 @@
 
 | 模块 | 职责 | 契约测试 |
 |---|---|---|
-| cli.py | 9 命令 argparse 目录、闸门与文案 | tests/test_cli.py |
+| cli.py | 10 命令 argparse 目录、闸门与文案、proposal 骨架 | tests/test_cli.py |
 | common.py | 工作区定位、JSON 读写（坏文件入 failed/）、幂等登记簿 | tests/test_common.py |
 | state.py | 五表结构、提案合并（upsert/append/resolve…）、inbox README 播种 | tests/test_state.py |
 | validator.py + schemas/ | 提案/schema 机械校验（结构级，不判事实真伪） | tests/test_validator.py |
 | checks.py | check：结构/schema/算术/逾期/form 占比 | tests/test_checks.py |
-| evidence.py | words/style/form/dup/mentions/gaps——只输出数 | tests/test_evidence.py |
+| evidence.py | words/style/form/dup/mentions/gaps/file + all 聚合——只输出数 | tests/test_evidence.py |
 | pack.py | P0 任务书整块 / P1 触发 / P2 索引，超预算按优先级硬裁 | tests/test_pack.py |
 | snapshot.py | 快照 create/list/rollback（pre_rollback 保护；不碰 manuscript） | tests/test_snapshot.py |
 

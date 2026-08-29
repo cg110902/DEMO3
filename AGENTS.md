@@ -47,7 +47,7 @@
 
 `agents/rules/{novel_workflow.md, novel_craft.md}` = SOP 与文学默认值；
 `agents/skills/<角色>/SKILL.md` = 岗位合同；`agents/genre_guide.md` = 题材词汇（只供选择，非公式）；
-`workspace/<slug>/` = 书本体（结构见 workflow#工作区）；`studio.py`=引擎壳，9 命令查 `help`；
+`workspace/<slug>/` = 书本体（结构见 workflow#工作区）；`studio.py`=引擎壳，10 命令查 `help`；
 `docs/PLAN.md` = 为什么这么设计（人读文档；写作不查它，冲突时以本文件与 workflow 为准）。
 
 ## 交接语气（对子代理）
