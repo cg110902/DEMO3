@@ -11,13 +11,15 @@
 > 已了结不再列：章长方差（v1.1 已量化）、status 枚举（README 已警示）、guard 选词（craft 已裁）、
 > sync 报错文案（v1.1 已补）、`snapshot list` 与 front-matter 超键（本文撰写当日当场修复，见 M6.1）。
 
-## 批次 M6.1 契约真实性 —— 让文档每句话都有代码兑付
+## 批次 M6.1 契约真实性（D1/D2 ✅，D3 待做）—— 让文档每句话都有代码兑付
 
 **来源**：两轮自查抓出两例"docs 说话、code 不办"——`snapshot list` 在 help 口径里存在但
 argparse 未注册（按文档敲命令=报错）；AGENTS 禁令 6 承诺"front-matter 超键 check 拦截"但
 check 不查（实测 `supernumber: 42` 畅通）。都是测试没覆盖"文档教的那一下"。
 
-- **D1 docs-as-tests（新增，根治类）**：`tests/test_docs_contract.py`——扫 AGENTS.md /
+- **D1 docs-as-tests（✅ 当日落地）**：`tests/test_docs_contract.py`——扫规范文档全部
+  `python studio.py …` 命令示例逐条过 argparse（占位符行跳过），并冻结"命令目录三镜像"
+  （parser choices / help --json / COMMAND_HELP 互等）。上线当日即抓修一例误判。：`tests/test_docs_contract.py`——扫 AGENTS.md /
   workflow / engine/README 中所有 `studio.py` 命令示例，逐条喂给 argparse 验证"可解析"
   （`parse_args` 冒烟，不执行、不落盘）。文档杜撰命令 = 测试红。预算 ~60 行测试代码。
 - **D2 超键拦截（已完成）**：`checks._BEATS_FM_KEYS` 七键白名单 + error 规则
@@ -38,7 +40,8 @@ check 不查（实测 `supernumber: 42` 畅通）。都是测试没覆盖"文档
   随 beats 进 pack P0），`evidence style` 并入逐章计数。单字/条件禁忌从此有结构化的家，
   不污染全局 style_guards（卷一"数"字两难的终解）。**键扩容流程一并立规**：加一个
   front-matter 键 = checks 常量 + craft#front-matter 键 + 回归测试三处同步，缺一即漂移。
-- **P3 提案骨架生成**：`studio.py proposal new ch_007` 向 stdout 打印预填 schema/chapter/
+- **P3 提案骨架生成（✅ 已落地 `proposal new <ch>`）**：在途占位拒造、骨架原样过 dry-run
+  校验入测试；PLAN 附录 A 增第 7 条；workflow Stage 4 动作 1 改用之。：`studio.py proposal new ch_007` 向 stdout 打印预填 schema/chapter/
   operation_id（日期+章号自动序号）的最小合法骨架，主控填空后存 inbox。三次拒收教训
   （status 枚举、缺 chapter、字段名错）里前两类可被骨架根除；validator 逐字段报错已存在
   （实测确认），此项只补"生成"这半程。不引入写权限新通道（骨架只打印，不写盘）。
@@ -48,10 +51,11 @@ check 不查（实测 `supernumber: 42` 畅通）。都是测试没覆盖"文档
 **来源**：三章初稿实测都只有目标一半、盲改扩容时 replace MISS（2/10）；单章"恒 4 调用"
 是设计口径，实操常 split 补跑 words/style/form/dup 各一遍。
 
-- **E1 `evidence all`**：一次输出 words+style+form+dup+gaps 全套 JSON（`--chapter` 时按章切片）。
-  纯聚合零新算，单章引擎往返 4→1~2。
-- **E2 `evidence words/style --file <草稿路径>`**：直接数工作区内任意 md（raw 场景）。
-  起草当场看实数，"写到一半猜字数"消灭；也是审校重铸时的对照尺。
+- **E1 `evidence all`（✅ 已落地）**：一次输出 words+style+form+dup+gaps 全套 JSON。纯聚合
+  零新算，单章引擎往返 4→1（切片场景用原有单 kind）。
+- **E2 `evidence file <相对路径>`（✅ 已落地——接口从 --file 改为 kind 统一）**：单篇实测
+  复用定稿同一 `_stats_one`（cjk/句式/tic/段首全套）；路径逃逸拒 rc1。起草当场看实数，
+  "写到一半猜字数"消灭；审校打磨时的对照尺。
 - **E3 分景起草协议（纯文档）**：任务书「目标」按场景分块并各配字数带建议；起草代理逐景写、
   合成一个 raw vN（版本制不变）。craft 加两行、workflow Stage 2 加一句。治截断与整章返工，
   引擎零改动。
@@ -83,9 +87,9 @@ check 不查（实测 `supernumber: 42` 畅通）。都是测试没覆盖"文档
 
 | 序 | 项 | 量级 | 依赖 |
 |---|---|---|---|
-| 1 | D1 docs-as-tests | 半天 | 无——后续一切文档改动的防线，最先立 |
-| 2 | P3 proposal new | 半天 | 无（纯 cli+state helper） |
-| 3 | E1+E2 evidence 聚合与 --file | 半天 | 附录 A 先补一行 |
+| 1 | D1 docs-as-tests | ✅ 已落地 | — |
+| 2 | P3 proposal new | ✅ 已落地 | — |
+| 3 | E1+E2 evidence 聚合与单文件实测 | ✅ 已落地 | 附录 A 已补第 7 条 |
 | 4 | P2 guard_extra（含键扩容流程） | 半天 | D1 已立（craft 同步改） |
 | 5 | P1 审校结构化 | 1 天 | 动 sync 闸门，排在卷二 ch_007 收章之后落地（旧章注记不回改） |
 | 6 | E3+E4 | 半天 | 纯文档+小改 |
