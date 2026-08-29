@@ -32,14 +32,15 @@ check 不查（实测 `supernumber: 42` 畅通）。都是测试没覆盖"文档
 **来源**：卷一里审校注记是否"真审了"全靠主控读；章级禁忌（"数"、比喻字）引擎不数导致
 写稿后必须人肉 python 硬查；提案字段错被闸门拒了三次才全对。
 
-- **P1 审校注记结构化**：`log/review/ch_XXX.md` 头部加 front-matter
-  `acceptance: [{item, pass, evidence}]`（条目须与任务书「验收」一一对应）。sync 新增机械核对：
-  未答条目数、勾了但 evidence 行为空 → 拒绝封存。引擎仍不判文笔好坏——**只数"每问是否必答"**。
-  动 checks + workflow Stage 3/4 输出合同 + templates/review.md。
-- **P2 章级 guard 进 front-matter**：合法键扩一个 `guard_extra: [词1, 词2]`（本章专用、
-  随 beats 进 pack P0），`evidence style` 并入逐章计数。单字/条件禁忌从此有结构化的家，
-  不污染全局 style_guards（卷一"数"字两难的终解）。**键扩容流程一并立规**：加一个
-  front-matter 键 = checks 常量 + craft#front-matter 键 + 回归测试三处同步，缺一即漂移。
+- **P1 审校注记结构化（✅ 2026-08-29 落地，方案修正）**：实施时弃 front-matter 方案
+  （极简 YAML 解析器撑不起嵌套 + 守注记"零格式义务"原则）——改为「## 验收打钩」节的
+  `N. 条目：✓/✗——证据` 行规 + `checks.review_gate` 在 sync 合并前数行查符：缺答/缺符/
+  ✓短证据 → 拒绝封存且不落半成品。beats 无验收节、注记缺席（代笔例外）均不拦；
+  引擎仍不判文笔好坏——只数"每问是否必答"。ch_008 起硬合同，旧章不回改。
+- **P2 章级 guard 进 front-matter（✅ 2026-08-29 落地）**：`guard_extra: 词1|词2`（竖线串、
+  适配极简解析器）入八键白名单，随 beats 进 pack P0；`evidence style` 逐章计数标
+  `guard_extra_scoped`，`evidence file <路径> <章节>` 同尺。**键扩容流程立规**：checks 常量 +
+  craft#front-matter 键 + 回归测试三处同步——本次即按此流程走完（卷一"数"字两难的终解）。
 - **P3 提案骨架生成（✅ 已落地 `proposal new <ch>`）**：在途占位拒造、骨架原样过 dry-run
   校验入测试；PLAN 附录 A 增第 7 条；workflow Stage 4 动作 1 改用之。：`studio.py proposal new ch_007` 向 stdout 打印预填 schema/chapter/
   operation_id（日期+章号自动序号）的最小合法骨架，主控填空后存 inbox。三次拒收教训
@@ -62,6 +63,8 @@ check 不查（实测 `supernumber: 42` 畅通）。都是测试没覆盖"文档
 - **E4（变体，已裁决）**：pack 保持纯上下文不动——"本章还欠什么"（gaps 快到期、failed/
   件数、待合并提案）并入 **status 的"下一步"区**（status 本就是主控仪表盘，该逻辑位已存在）。
   裁决理由：信息归位优先于省一次调用——发给子代理的包不该混入主控的账。
+  （✅ 2026-08-29 落地 `_status_debts`：failed/ 积压数 + 距到期 ≤2 章的线，异常吞掉
+  永不压垮仪表盘。）
 
 ## 批次 M6.4 质量视角 —— 项目"可以复杂"的第一实体
 
@@ -90,8 +93,8 @@ check 不查（实测 `supernumber: 42` 畅通）。都是测试没覆盖"文档
 | 1 | D1 docs-as-tests | ✅ 已落地 | — |
 | 2 | P3 proposal new | ✅ 已落地 | — |
 | 3 | E1+E2 evidence 聚合与单文件实测 | ✅ 已落地 | 附录 A 已补第 7 条 |
-| 4 | P2 guard_extra（含键扩容流程） | 半天 | D1 已立（craft 同步改） |
-| 5 | P1 审校结构化 | 1 天 | 动 sync 闸门，排在卷二 ch_007 收章之后落地（旧章注记不回改） |
+| 4 | P2 guard_extra（含键扩容流程） | ✅ 已落地 | — |
+| 5 | P1 审校结构化 | ✅ 已落地 | ch_007 收章后实施，旧章注记未回改（审计） |
 | 6 | E3+E4 | 半天 | 纯文档+小改 |
 | 7 | R1+R2+R3 | 1 天 | 文档与模板为主 |
 
