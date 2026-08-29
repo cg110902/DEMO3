@@ -1,0 +1,30 @@
+{
+  "note": "复式多资源池账本：余额一律由流水重算，禁止手改",
+  "pools": {
+    "standard_currency": {
+      "current": 200,
+      "initial": 0,
+      "name": "主通货",
+      "unit": "枚"
+    }
+  },
+  "transactions": [
+    {
+      "balance_after": 200,
+      "chapter": "ch_001",
+      "counterparty": "镇库",
+      "delta": 200,
+      "pool": "standard_currency",
+      "subject": "夜巡赏钱（十一月初三班）",
+      "type": "income"
+    },
+    {
+      "balance_after": 200,
+      "chapter": "ch_002",
+      "delta": 0,
+      "pool": "standard_currency",
+      "subject": "待记账例：宴客酒（客人自带，无出入）",
+      "type": "expense"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "foreshadows": [
+    {
+      "id": "GUN-001",
+      "name": "村长与黑玉佩旧案",
+      "plan": "ch_002 村长探佩（MIS 起）；ch_003 祠堂账缺印 remind",
+      "plant_ch": 1,
+      "status": "Reminded",
+      "target_ch": 3
+    }
+  ],
+  "misunderstandings": [
+    {
+      "content": "沈拓认定村长来夺物探虚实；常安认定沈拓已握实据且将步其父旧辙",
+      "id": "MIS-001",
+      "level": 1,
+      "parties": "常安↔沈拓",
+      "status": "Active",
+      "target_ch": 3,
+      "truth": "村长只疑未证，此夜实为示警；沈拓亦未握实据"
+    }
+  ]
+}

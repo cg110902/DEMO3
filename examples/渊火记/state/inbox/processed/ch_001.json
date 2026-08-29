@@ -1,0 +1,101 @@
+{
+ "schema": "novel-studio.state-mutation/v2",
+ "chapter": "ch_001",
+ "operation_id": "ch_001.syncer.1129-1",
+ "current": {
+  "time": "启元十年十一月初三，亥时至翌日卯时",
+  "location": "渊口北岸·沈拓铺房",
+  "present_characters": [
+   "沈拓"
+  ],
+  "equipment": "黑玉佩（缝入甲衣内衬，独知）；雪枝（油壶蜡封）",
+  "situation": "持佩未声张；察觉村长夜巡绕远并对他起疑"
+ },
+ "entities": [
+  {
+   "action": "upsert",
+   "name": "沈拓",
+   "type": "person",
+   "summary": "渊口北岸守卒，前书办之子；识字会看账，数人心快。近况：在岗夜巡；持佩独知",
+   "aliases": [
+    "拓子",
+    "小沈"
+   ],
+   "card": "characters/protagonist.md",
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "常安",
+   "type": "person",
+   "summary": "村长（镇长第十七年）；玉佩案抄件经手人（未揭）。近况：对沈拓起疑，恐其查案",
+   "aliases": [
+    "村长",
+    "老丈"
+   ],
+   "card": "characters/village_head.md",
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "黑玉佩",
+   "type": "item",
+   "summary": "军械司督造印信样式，三回刀弯钩收笔；案卷记'已随葬焚毁'。现状：沈拓处，缝入内衬",
+   "aliases": [
+    "玉佩",
+    "督造印"
+   ],
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "渊口",
+   "type": "place",
+   "summary": "无底裂口，冒暖气与长明火；镇命脉；'扔进渊就算没了'。现状：冬旺提前，风声反常顺",
+   "aliases": [
+    "渊"
+   ],
+   "status": "active"
+  }
+ ],
+ "lines": [
+  {
+   "kind": "foreshadow",
+   "action": "plant",
+   "name": "村长与黑玉佩旧案",
+   "plant_ch": 1,
+   "target_ch": 3,
+   "plan": "ch_002 村长探佩（MIS 起）；ch_003 祠堂账缺印 remind"
+  }
+ ],
+ "timeline": {
+  "events": [
+   {
+    "time": "启元十年十一月初三亥时",
+    "event": "夜巡捡佩；村长绕远试探",
+    "chapter": "ch_001"
+   },
+   {
+    "time": "十一月初四卯时",
+    "event": "哨棚簿记'亥初三班，平安'",
+    "chapter": "ch_001"
+   }
+  ]
+ },
+ "ledger": {
+  "transactions": [
+   {
+    "pool": "standard_currency",
+    "delta": 200,
+    "type": "income",
+    "subject": "夜巡赏钱（十一月初三班）",
+    "counterparty": "镇库",
+    "chapter": "ch_001"
+   }
+  ]
+ },
+ "synopsis": {
+  "title": "渊口",
+  "text": "沈拓夜巡捡得黑玉佩，识出督造印收法，缝入内衬谁都不告诉；村长常安绕远夜探、目光停在空手上，临走半句话咽了回去。"
+ }
+}

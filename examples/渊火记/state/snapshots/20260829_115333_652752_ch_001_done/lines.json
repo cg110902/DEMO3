@@ -1,0 +1,13 @@
+{
+  "foreshadows": [
+    {
+      "id": "GUN-001",
+      "name": "村长与黑玉佩旧案",
+      "plan": "ch_002 村长探佩（MIS 起）；ch_003 祠堂账缺印 remind",
+      "plant_ch": 1,
+      "status": "Planted",
+      "target_ch": 3
+    }
+  ],
+  "misunderstandings": []
+}

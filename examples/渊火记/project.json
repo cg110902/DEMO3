@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-08-29",
+  "genre": "悬疑玄幻",
+  "mode": "automatic",
+  "protagonist": "沈拓",
+  "schema": "novel-studio.project/v1",
+  "style_guards": [
+    "空气凝固",
+    "嘴角勾起",
+    "仿佛整个世界",
+    "指尖轻叩",
+    "无声地滑过",
+    "心中冷笑",
+    "灯油"
+  ],
+  "title": "渊火记",
+  "words_target": [
+    2200,
+    4200
+  ]
+}

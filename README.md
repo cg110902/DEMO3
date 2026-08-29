@@ -38,7 +38,8 @@ python studio.py export --txt         # 全书编译
 - [x] M2 证据与体检：evidence 五 kind + check 体检（errors 事实级）
 - [x] M3 文档层：AGENTS/workflow/craft/5 skills/genre_guide 全套新写；tests/test_docs.py 交叉检查
 - [x] M4 装配层：pack 三层 + templates 槽位化 + export
-- [ ] M5 端到端试点 + 拟人度盲测
+- [x] M5 端到端试点 + 拟人度盲测（examples/渊火记 三章闭环：单章 LLM 调用恒为 4、check 零 errors、
+  账本重算/回流警告实证；examples/盲测 六维评分表。注：盲测为单模型自评，n=1，待人工抽检加固）
 
 ## 开发
 

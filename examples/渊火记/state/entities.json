@@ -1,0 +1,68 @@
+{
+  "entries": [
+    {
+      "aliases": [
+        "小沈",
+        "拓子"
+      ],
+      "card": "characters/protagonist.md",
+      "name": "沈拓",
+      "status": "active",
+      "summary": "渊口守卒；已知生父死前十天询过'誊册的是谁'；比对过残印但压下结论",
+      "type": "person"
+    },
+    {
+      "aliases": [
+        "村长",
+        "老丈"
+      ],
+      "card": "characters/village_head.md",
+      "name": "常安",
+      "status": "active",
+      "summary": "村长；已交底'你爹来问过誊册人'，自称'没知道过'；示警后腿脚发虚",
+      "type": "person"
+    },
+    {
+      "aliases": [
+        "玉佩",
+        "督造印"
+      ],
+      "card": "",
+      "name": "黑玉佩",
+      "status": "active",
+      "summary": "军械司督造印信样式，三回刀弯钩收笔；案卷记'已随葬焚毁'。现状：沈拓处，缝入内衬",
+      "type": "item"
+    },
+    {
+      "aliases": [
+        "渊"
+      ],
+      "card": "",
+      "name": "渊口",
+      "status": "active",
+      "summary": "无底裂口，冒暖气与长明火；镇命脉；'扔进渊就算没了'。现状：冬旺提前，风声反常顺",
+      "type": "place"
+    },
+    {
+      "aliases": [
+        "册房",
+        "殿"
+      ],
+      "card": "",
+      "name": "祠堂",
+      "status": "active",
+      "summary": "镇北高殿，一墙册（族谱/公册/更房杂记/行老账）；钥匙族老轮值；案页疑换处。现状：新烛泪与殿影共存；钥匙钩朝里",
+      "type": "place"
+    },
+    {
+      "aliases": [
+        "影子"
+      ],
+      "card": "",
+      "name": "殿影",
+      "status": "active",
+      "summary": "成年男性身份未知：干纹指印+护火烛泪+暗角雪窝三证；知沈拓查册；无对话无面目",
+      "type": "person"
+    }
+  ]
+}

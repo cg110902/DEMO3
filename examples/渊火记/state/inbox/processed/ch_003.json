@@ -1,0 +1,124 @@
+{
+ "schema": "novel-studio.state-mutation/v2",
+ "chapter": "ch_003",
+ "operation_id": "ch_003.syncer.1129-3",
+ "current": {
+  "time": "启元十年十一月初五，卯时至巳时",
+  "location": "渊口北岸·沈拓铺房",
+  "present_characters": [
+   "沈拓"
+  ],
+  "situation": "知案页被换且墨新；常安来意改判为'防'非'夺'；新悬账：当年为何不拦；殿影在暗处目击过他",
+  "equipment": "黑玉佩（内衬，未示人）；雪枝油壶（未动）；新夹带：验页字条（已收）"
+ },
+ "entities": [
+  {
+   "action": "upsert",
+   "name": "沈拓",
+   "type": "person",
+   "summary": "渊口守卒；已知生父死前十天询过'誊册的是谁'；比对过残印但压下结论",
+   "aliases": [
+    "拓子",
+    "小沈"
+   ],
+   "card": "characters/protagonist.md",
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "常安",
+   "type": "person",
+   "summary": "村长；已交底'你爹来问过誊册人'，自称'没知道过'；示警后腿脚发虚",
+   "aliases": [
+    "村长",
+    "老丈"
+   ],
+   "card": "characters/village_head.md",
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "祠堂",
+   "type": "place",
+   "summary": "镇北高殿，一墙册（族谱/公册/更房杂记/行老账）；钥匙族老轮值；案页疑换处。现状：新烛泪与殿影共存；钥匙钩朝里",
+   "aliases": [
+    "殿",
+    "册房"
+   ],
+   "status": "active"
+  },
+  {
+   "action": "upsert",
+   "name": "殿影",
+   "type": "person",
+   "summary": "成年男性身份未知：干纹指印+护火烛泪+暗角雪窝三证；知沈拓查册；无对话无面目",
+   "aliases": [
+    "影子"
+   ],
+   "status": "active"
+  }
+ ],
+ "lines": [
+  {
+   "kind": "misunderstanding",
+   "action": "resolve",
+   "id": "MIS-001"
+  },
+  {
+   "kind": "foreshadow",
+   "action": "remind",
+   "id": "GUN-001",
+   "note": "残印与佩收笔一寸比对，结论未书"
+  },
+  {
+   "kind": "foreshadow",
+   "action": "update",
+   "id": "GUN-001",
+   "target_ch": 6,
+   "plan": "卷尾ch_006底稿到手即焚，兑现'玉佩来路'半张"
+  },
+  {
+   "kind": "foreshadow",
+   "action": "plant",
+   "name": "誊册人是谁",
+   "plant_ch": 3,
+   "target_ch": 6,
+   "plan": "常安答'我没知道过'为谎；ch_006 经老周闲话露笔格线索"
+  }
+ ],
+ "timeline": {
+  "events": [
+   {
+    "time": "十一月初五卯时",
+    "event": "沈拓借钥入祠堂，验出案页纸色新、残印同刀感",
+    "chapter": "ch_003"
+   },
+   {
+    "time": "十一月初五巳时",
+    "event": "常安殿门半张牌：沈砚死前十天询誊册人",
+    "chapter": "ch_003"
+   },
+   {
+    "time": "十一月初五巳时",
+    "event": "殿影目击查册；沈拓留门缝反将",
+    "chapter": "ch_003"
+   }
+  ]
+ },
+ "ledger": {
+  "transactions": [
+   {
+    "pool": "standard_currency",
+    "delta": -15,
+    "type": "expense",
+    "subject": "香烛钱（查册）",
+    "counterparty": "祠堂",
+    "chapter": "ch_003"
+   }
+  ]
+ },
+ "synopsis": {
+  "title": "故纸冷殿",
+  "text": "沈拓以'数号数纸'验出案页被换、残印与佩同刀感，压下未成之论；常安交底父亲旧询，误会澄清半张；殿影留指印与烛泪，沈拓空手出殿，账上添两行疑字。"
+ }
+}

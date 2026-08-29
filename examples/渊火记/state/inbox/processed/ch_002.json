@@ -1,0 +1,16 @@
+{"schema":"novel-studio.state-mutation/v2","chapter":"ch_002","operation_id":"ch_002.syncer.1129-2",
+ "current":{"time":"启元十年十一月初四夜","location":"渊口北岸·沈拓铺房",
+            "present_characters":["沈拓"],
+            "situation":"确认村长心虚升级且意在试探；'像他爹'成悬账；换班风声入盐行",
+            "equipment":"黑玉佩（内衬，未失手）；雪枝油壶（未动）"},
+ "entities":[
+   {"action":"upsert","name":"沈拓","type":"person","summary":"渊口北岸守卒；账房式冷静；已察觉村长知父事","aliases":["拓子","小沈"],"card":"characters/protagonist.md","status":"active"},
+   {"action":"upsert","name":"常安","type":"person","summary":"村长；抄件经手（未揭）；夜访送押金式酒，说漏半句即咽","aliases":["村长","老丈"],"card":"characters/village_head.md","status":"active"}],
+ "lines":[{"kind":"misunderstanding","action":"plant","parties":"常安↔沈拓",
+           "content":"沈拓认定村长来夺物探虚实；常安认定沈拓已握实据且将步其父旧辙",
+           "truth":"村长只疑未证，此夜实为示警；沈拓亦未握实据","target_ch":3},
+          {"kind":"foreshadow","action":"remind","id":"GUN-001","note":"缝线注视+初四夜话，村长知'初四前夜'细节"}],
+ "timeline":{"events":[{"time":"十一月初四亥时","event":"村长借盐灶作证夜访，话缝试探","chapter":"ch_002"},
+                        {"time":"十一月初四子时","event":"酒坛入雪；老周隔门报'换班风声'","chapter":"ch_002"}]},
+ "ledger":{"transactions":[{"pool":"standard_currency","delta":0,"type":"expense","subject":"待记账例：宴客酒（客人自带，无出入）","chapter":"ch_002"}]},
+ "synopsis":{"title":"客","text":"常安借作证夜访，见缝问甲、以巡籍胁调班；说漏'你爹当年也问过'即改口，留酒为押。沈拓答话如雪，送客后酒沉雪底——两头各自定性对方，误会成立。"}}

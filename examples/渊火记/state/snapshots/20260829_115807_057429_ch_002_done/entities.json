@@ -1,0 +1,47 @@
+{
+  "entries": [
+    {
+      "aliases": [
+        "小沈",
+        "拓子"
+      ],
+      "card": "characters/protagonist.md",
+      "name": "沈拓",
+      "status": "active",
+      "summary": "渊口北岸守卒；账房式冷静；已察觉村长知父事",
+      "type": "person"
+    },
+    {
+      "aliases": [
+        "村长",
+        "老丈"
+      ],
+      "card": "characters/village_head.md",
+      "name": "常安",
+      "status": "active",
+      "summary": "村长；抄件经手（未揭）；夜访送押金式酒，说漏半句即咽",
+      "type": "person"
+    },
+    {
+      "aliases": [
+        "玉佩",
+        "督造印"
+      ],
+      "card": "",
+      "name": "黑玉佩",
+      "status": "active",
+      "summary": "军械司督造印信样式，三回刀弯钩收笔；案卷记'已随葬焚毁'。现状：沈拓处，缝入内衬",
+      "type": "item"
+    },
+    {
+      "aliases": [
+        "渊"
+      ],
+      "card": "",
+      "name": "渊口",
+      "status": "active",
+      "summary": "无底裂口，冒暖气与长明火；镇命脉；'扔进渊就算没了'。现状：冬旺提前，风声反常顺",
+      "type": "place"
+    }
+  ]
+}

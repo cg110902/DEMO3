@@ -1,0 +1,31 @@
+{
+  "foreshadows": [
+    {
+      "id": "GUN-001",
+      "name": "村长与黑玉佩旧案",
+      "plan": "卷尾ch_006底稿到手即焚，兑现'玉佩来路'半张",
+      "plant_ch": 1,
+      "status": "Reminded",
+      "target_ch": 6
+    },
+    {
+      "id": "GUN-002",
+      "name": "誊册人是谁",
+      "plan": "常安答'我没知道过'为谎；ch_006 经老周闲话露笔格线索",
+      "plant_ch": 3,
+      "status": "Planted",
+      "target_ch": 6
+    }
+  ],
+  "misunderstandings": [
+    {
+      "content": "沈拓认定村长来夺物探虚实；常安认定沈拓已握实据且将步其父旧辙",
+      "id": "MIS-001",
+      "level": 1,
+      "parties": "常安↔沈拓",
+      "status": "Resolved",
+      "target_ch": 3,
+      "truth": "村长只疑未证，此夜实为示警；沈拓亦未握实据"
+    }
+  ]
+}
